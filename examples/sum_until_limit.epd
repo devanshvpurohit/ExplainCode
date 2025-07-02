@@ -1,0 +1,16 @@
+ALGORITHM SumUntilLimit
+INPUT: A, limit
+OUTPUT: total
+
+STEP 1: Set total ← 0
+STEP 2: Set i ← 0
+STEP 3: WHILE i < len(A) DO
+    Set total ← total + A[i]
+    IF total > limit THEN
+        BREAK
+    END IF
+    Set i ← i + 1
+END WHILE
+RETURN total
+
+END ALGORITHM

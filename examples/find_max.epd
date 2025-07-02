@@ -1,0 +1,13 @@
+ALGORITHM FindMax
+INPUT: A, n
+OUTPUT: max
+
+STEP 1: Set max ← A[0]
+STEP 2: FOR i ← 1 to n-1 DO
+    IF A[i] > max THEN
+        Set max ← A[i]
+    END IF
+END FOR
+RETURN max
+
+END ALGORITHM
