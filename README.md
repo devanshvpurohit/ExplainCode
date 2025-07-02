@@ -102,7 +102,7 @@ STEP 15:     RETURN c
 STEP 16: END IF
 ```
 
----
+```
 
 ExplainCode/
 ├── explaincode_lang/                  # 🔁 Python module for LSP + parser
@@ -119,7 +119,7 @@ ExplainCode/
 ├── README.md                         # 📘 Full project documentation
 ├── LICENSE                           # ⚖️ MIT or Apache 2.0 (optional, recommended)
 
----
+```
 
 ## 📦 Future Features
 
