@@ -122,8 +122,6 @@ ExplainCode/
 ```
 
 ## 📦 Future Features
-
-* [x] FOR, WHILE, IF/ELSE support
 * [x] RECURSION support
 * [ ] Error reporting with line numbers
 * [ ] Function calls from `.epd` files
