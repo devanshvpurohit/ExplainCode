@@ -1,0 +1,20 @@
+ALGORITHM ShowInterface
+INPUT: name
+OUTPUT: None
+
+STEP 1: Import tkinter
+STEP 2: Import matplotlib.pyplot
+
+STEP 3: Set root ← tkinter.Tk()
+STEP 4: root.title("Hello from ExplainAI")
+STEP 5: tkinter.Label(root, text="Hi " + name).pack()
+STEP 6: tkinter.Button(root, text="Close", command=root.destroy).pack()
+STEP 7: root.mainloop()
+
+STEP 8: matplotlib.pyplot.plot([1, 2, 3], [3, 1, 4])
+STEP 9: matplotlib.pyplot.title("Test Plot")
+STEP 10: matplotlib.pyplot.show()
+
+STEP 11: RETURN None
+
+END ALGORITHM

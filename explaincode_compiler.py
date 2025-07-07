@@ -1,134 +1,226 @@
+# explainai_compiler.py
+
 import re
 import sys
 import os
 import ast
+import importlib
 
-class ExplainCodeCompiler:
+# ------------------------------
+# ExplainAI Parser + Compiler
+# ------------------------------
+
+class ExplainAIParser:
     def __init__(self):
-        self.indent = "    "
-        self.current_indent = ""
-        self.function_name = ""
-        self.inputs = []
+        self.ast = {
+            "function_name": "",
+            "inputs": [],
+            "body": []
+        }
 
-    def compile(self, lines):
-        self.current_indent = ""
-        code = []
+    def parse(self, lines):
+        lines = [line.strip() for line in lines if line.strip() and not line.strip().startswith("#")]
 
-        for line in lines:
-            line = line.strip()
-            if not line or line.startswith("#"):
-                continue
+        if not lines[0].startswith(("ALGORITHM", "MODEL", "API_CALL")):
+            raise SyntaxError("File must start with ALGORITHM, MODEL, or API_CALL.")
 
-            if line.startswith("ALGORITHM"):
-                self.function_name = line.split()[1]
+        self.ast["function_name"] = lines[0].split()[1]
 
-            elif line.startswith("INPUT:"):
-                self.inputs = [x.strip() for x in line.replace("INPUT:", "").split(",")]
-                param_list = ", ".join(self.inputs)
-                code.append(f"def {self.function_name}({param_list}):")
-                self.current_indent = self.indent
-
+        for line in lines[1:]:
+            if line.startswith("INPUT:"):
+                self.ast["inputs"] = [x.strip() for x in line.replace("INPUT:", "").split(",")]
             elif line.startswith("OUTPUT:"):
-                continue  # No need to use OUTPUT in Python
-
-            elif line.startswith("STEP"):
-                code.append(self.current_indent + f"# {line}")
-
-            elif line.startswith("Set"):
-                match = re.match(r"Set (.+?) ← (.+)", line)
-                if match:
-                    left, right = match.groups()
-                    code.append(self.current_indent + f"{left.strip()} = {right.strip()}")
-
-            elif line.startswith("IF"):
-                condition = line[3:].replace("THEN", "").strip()
-                condition = self._convert_bool(condition)
-                code.append(self.current_indent + f"if {condition}:")
-                self.current_indent += self.indent
-
-            elif line.startswith("END IF"):
-                self.current_indent = self.current_indent[:-len(self.indent)]
-
-            elif line.startswith("FOR"):
-                match = re.match(r"FOR (.+?) ← (.+?) to (.+?) DO", line)
-                if match:
-                    var, start, end = match.groups()
-                    code.append(self.current_indent + f"for {var.strip()} in range({start.strip()}, {end.strip()} + 1):")
-                    self.current_indent += self.indent
-
-            elif line.startswith("END FOR"):
-                self.current_indent = self.current_indent[:-len(self.indent)]
-
-            elif line.startswith("WHILE"):
-                condition = line.replace("WHILE", "").replace("DO", "").strip()
-                condition = self._convert_bool(condition)
-                code.append(self.current_indent + f"while {condition}:")
-                self.current_indent += self.indent
-
-            elif line.startswith("END WHILE"):
-                self.current_indent = self.current_indent[:-len(self.indent)]
-
-            elif line.startswith("BREAK"):
-                code.append(self.current_indent + "break")
-
-            elif line.startswith("PRINT"):
-                expr = line.replace("PRINT", "").strip()
-                code.append(self.current_indent + f"print({expr})")
-
-            elif line.startswith("RETURN"):
-                value = line.replace("RETURN", "").strip()
-                code.append(self.current_indent + f"return {value}")
-
-            elif line.startswith("END ALGORITHM"):
+                continue  # Optional
+            elif line.startswith(("END ALGORITHM", "END MODEL", "END API_CALL")):
                 break
+            elif line.startswith("STEP"):
+                step = self._parse_step(line)
+                if step:
+                    self.ast["body"].append(step)
 
-            else:
-                raise SyntaxError(f"Unknown instruction: {line}")
+        return self.ast
 
-        return "\n".join(code), self.function_name, self.inputs
+    def _parse_step(self, line):
+        match = re.match(r"STEP\s+\d+:?\s*(.+)", line)
+        if not match:
+            return None
+        content = match.group(1)
 
-    def _convert_bool(self, condition):
-        return condition.replace("AND", "and").replace("OR", "or").replace("NOT", "not")
+        if content.startswith("Set"):
+            m = re.match(r"Set\s+(.+?)\s+←\s+(.+)", content)
+            if m:
+                return {"type": "assign", "target": m.group(1), "value": m.group(2)}
 
-    def compile_and_run(self, filename):
-        if not filename.endswith(".epd"):
-            raise ValueError("Only .epd files are supported.")
-        if not os.path.exists(filename):
-            raise FileNotFoundError("The file does not exist.")
+        elif content.startswith("Import"):
+            return {"type": "import", "lib": content.split()[1]}
 
-        with open(filename, "r") as f:
-            lines = f.readlines()
+        elif content.startswith("KEY:"):
+            return {"type": "apikey", "value": content.replace("KEY:", "").strip()}
 
-        py_code, func_name, inputs = self.compile(lines)
+        elif content.startswith("FOR"):
+            m = re.match(r"FOR\s+(.+?)\s+←\s+(.+?)\s+to\s+(.+?)\s+DO", content)
+            if m:
+                return {"type": "for", "var": m.group(1), "start": m.group(2), "end": m.group(3)}
 
-        exec_globals = {}
-        compiled_code = py_code + f"\n\n# Call the function with user inputs\n"
+        elif content.startswith("WHILE"):
+            condition = content.replace("WHILE", "").replace("DO", "").strip()
+            return {"type": "while", "condition": condition}
 
-        user_args = []
-        print(f"\n📥 Enter values for: {', '.join(inputs)}")
-        for var in inputs:
-            raw = input(f"→ {var} = ")
-            try:
-                val = ast.literal_eval(raw)  # Handles lists, ints, strings safely
-            except:
-                val = raw
-            user_args.append(val)
+        elif content.startswith("IF"):
+            condition = content.replace("IF", "").replace("THEN", "").strip()
+            return {"type": "if", "condition": condition}
 
-        call_expr = f"{func_name}({', '.join(repr(arg) for arg in user_args)})"
-        compiled_code += f"result = {call_expr}\nprint('✅ Output:', result)\n"
+        elif content.startswith("END IF"):
+            return {"type": "endif"}
 
-        print("\n🧠 Compiled Python Code:\n")
-        print(py_code)
+        elif content.startswith("ELSE"):
+            return {"type": "else"}
 
-        print("\n🚀 Running...\n")
-        exec(compiled_code, exec_globals)
+        elif content.startswith("END FOR"):
+            return {"type": "endfor"}
 
-# ---------- Main ----------
+        elif content.startswith("END WHILE"):
+            return {"type": "endwhile"}
+
+        elif content.startswith("RETURN"):
+            return {"type": "return", "value": content.replace("RETURN", "").strip()}
+
+        elif content.startswith("PRINT"):
+            return {"type": "print", "value": content.replace("PRINT", "").strip()}
+
+        elif content.startswith("BREAK"):
+            return {"type": "break"}
+
+        else:
+            return {"type": "raw", "code": content}
+
+class ExplainAICompiler:
+    def __init__(self, ast):
+        self.ast = ast
+        self.code = []
+        self.indent = "    "
+        self.level = 0
+        self.libs = set()
+
+    def compile(self):
+        fn = self.ast["function_name"]
+        args = ", ".join(self.ast["inputs"])
+        self.code.append(f"def {fn}({args}):")
+        self.level += 1
+
+        for stmt in self.ast["body"]:
+            self._emit(stmt)
+
+        return "\n".join(sorted(self.libs)) + "\n\n" + "\n".join(self.code)
+
+    def _emit(self, stmt):
+        indent = self.indent * self.level
+
+        if stmt["type"] == "assign":
+            self.code.append(f"{indent}{stmt['target']} = {stmt['value']}")
+
+        elif stmt["type"] == "import":
+            self.libs.add(f"import {stmt['lib']}")
+            self._try_import(stmt['lib'])
+
+        elif stmt["type"] == "apikey":
+            self.code.append(f"{indent}api_key = '{stmt['value']}'")
+
+        elif stmt["type"] == "for":
+            self.code.append(f"{indent}for {stmt['var']} in range({stmt['start']}, {stmt['end']}+1):")
+            self.level += 1
+
+        elif stmt["type"] == "endfor":
+            self.level -= 1
+
+        elif stmt["type"] == "while":
+            self.code.append(f"{indent}while {stmt['condition']}:")
+            self.level += 1
+
+        elif stmt["type"] == "endwhile":
+            self.level -= 1
+
+        elif stmt["type"] == "if":
+            self.code.append(f"{indent}if {stmt['condition']}:")
+            self.level += 1
+
+        elif stmt["type"] == "else":
+            self.level -= 1
+            self.code.append(f"{indent}else:")
+            self.level += 1
+
+        elif stmt["type"] == "endif":
+            self.level -= 1
+
+        elif stmt["type"] == "print":
+            self.code.append(f"{indent}print({stmt['value']})")
+
+        elif stmt["type"] == "return":
+            self.code.append(f"{indent}return {stmt['value']}")
+
+        elif stmt["type"] == "break":
+            self.code.append(f"{indent}break")
+
+        elif stmt["type"] == "comment":
+            self.code.append(f"{indent}# {stmt['text']}")
+
+        elif stmt["type"] == "raw":
+            self.code.append(f"{indent}{stmt['code']}")
+
+    def _try_import(self, module):
+        try:
+            importlib.import_module(module)
+        except ImportError:
+            os.system(f"pip install {module}")
+
+# ------------------------------
+# Runner
+# ------------------------------
+
+def run_explainai(filename):
+    if not filename.endswith(".eai") and not filename.endswith(".epd"):
+        raise ValueError("Only .eai or .epd files are supported.")
+    if not os.path.exists(filename):
+        raise FileNotFoundError(f"{filename} does not exist.")
+
+    with open(filename, "r", encoding="utf-8") as f:
+        lines = f.readlines()
+
+    parser = ExplainAIParser()
+    ast_tree = parser.parse(lines)
+
+    compiler = ExplainAICompiler(ast_tree)
+    py_code = compiler.compile()
+
+    print("\n🔧 Generated Python Code:\n")
+    print(py_code)
+
+    py_filename = os.path.splitext(os.path.basename(filename))[0] + "_compiled.py"
+    with open(py_filename, "w", encoding="utf-8") as f:
+        f.write(py_code)
+
+    print(f"\n📥 Enter values for: {', '.join(ast_tree['inputs'])}")
+    user_inputs = []
+    for var in ast_tree['inputs']:
+        val = input(f"→ {var} = ")
+        try:
+            user_inputs.append(ast.literal_eval(val))
+        except:
+            user_inputs.append(val)
+
+    exec_globals = {}
+    print("\n🚀 Running...\n")
+    exec(py_code, exec_globals)
+    result = exec_globals[ast_tree["function_name"]](*user_inputs)
+    print("\n✅ Output:", result)
+
+# ------------------------------
+# Entry Point
+# ------------------------------
+
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Usage: python explaincode_compiler.py <file.epd>")
+        print("Usage: python explainai_compiler.py <file.eai|file.epd>")
         sys.exit(1)
 
-    source_file = sys.argv[1]
-    compiler = ExplainCodeCompiler()
-    compiler.compile_and_run(source_file)
+    run_explainai(sys.argv[1])

@@ -1,0 +1,11 @@
+MODEL AnalyzeSentiment
+INPUT: text
+OUTPUT: result
+
+STEP 1: Import transformers
+STEP 2: Set pipeline ← transformers.pipeline("sentiment-analysis")
+STEP 3: Set result ← pipeline(text)
+STEP 4: PRINT result
+STEP 5: RETURN result
+
+END MODEL
