@@ -1,137 +1,162 @@
-Here's a polished and developer-friendly **GitHub `README.md`** for your `ExplainCode` language project:
+Here’s a polished `README.md` you can use for your ExplainCode 2.0 project on GitHub:
 
 ---
 
 ````markdown
-# 🧠 ExplainCode
-
-> A simple, readable, and executable pseudocode language built in Python.
-
-ExplainCode is a human-friendly language that looks like pseudocode but runs like real Python. It’s designed for students, educators, and developers who want to express logic in clean, readable steps—without getting bogged down by syntax.
+# ExplainCode 2.0 🧠💡
+A Human-Centric Natural Language Programming Language for AI Workflows and Algorithmic Reasoning
 
 ---
 
-## 📂 What Is ExplainCode?
+## 🌟 Overview
 
-ExplainCode lets you write algorithms like this:
+**ExplainCode 2.0** is a domain-specific programming language that bridges the gap between natural logic and executable code. Designed for **AI prototyping**, **algorithmic education**, and **intuitive computing**, it allows users to write code using simple, human-readable steps.
 
-```epd
-ALGORITHM AddNumbers
-INPUT: a, b
-OUTPUT: sum
+> No more confusing syntax. Just logic that *speaks your language*.
 
-STEP 1: Set sum ← a + b
-STEP 2: RETURN sum
+---
 
-END ALGORITHM
+## 🔧 Features
+
+- 🔤 **Natural Language Syntax** – Use keywords like `STEP`, `Set`, `IF`, `MODEL`, and `DISPLAY`
+- 🧠 **AI-Aware Constructs** – Seamless pipelines for sentiment analysis, visualization, ML models
+- ⚡ **Dual Execution** – Compile to Python *or* interpret directly for instant feedback
+- 🎓 **Education-Friendly** – Perfect for students learning algorithms and program flow
+- 🖥️ **PyQt5 IDE** – A complete GUI for editing, running, and debugging `.ec2` and `.modelx` files
+
+---
+
+## 📦 Installation
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/your-username/explaincode.git
+cd explaincode
 ````
 
-…and then compiles it to Python and runs it.
-
----
-
-## ✅ Features
-
-* ✨ Human-readable syntax (`STEP`, `IF`, `FOR`, etc.)
-* 🐍 Compiles directly to Python
-* 🧪 Takes inputs from the command line
-* 🔁 Supports loops, conditions, recursion, returns
-* 📄 Easy `.epd` file format
-* 🎓 Perfect for algorithm teaching and demos
-
----
-
-## 🚀 Getting Started
-
-### 1. Clone the Repo
+### 2. Install Requirements
 
 ```bash
-git clone https://github.com/yourusername/explaincode.git
-cd explaincode
+pip install -r requirements.txt
 ```
 
-### 2. Create a `.epd` File
+### 3. Run the IDE
 
-Example: `add_numbers.epd`
+```bash
+python explaincode_gui.py
+```
 
-```epd
-ALGORITHM AddNumbers
+---
+
+## 🚀 Hello, ExplainCode
+
+Here’s an example of finding the maximum of two numbers:
+
+```plaintext
+DEFINE MaxOfTwo
 INPUT: a, b
-OUTPUT: sum
-
-STEP 1: Set sum ← a + b
-STEP 2: RETURN sum
-
-END ALGORITHM
+OUTPUT: result
+STEP 1: IF a > b THEN
+STEP 2:     Set result ← a
+STEP 3: ELSE
+STEP 4:     Set result ← b
+STEP 5: END IF
+STEP 6: DISPLAY result
+STEP 7: RETURN result
+END DEFINE
 ```
 
-### 3. Run the Compiler
+Or a sentiment analysis model using HuggingFace Transformers:
+
+```plaintext
+MODEL AnalyzeText
+INPUT: text
+OUTPUT: mood
+STEP 1: USE transformers
+STEP 2: Set pipe ← transformers.pipeline("sentiment-analysis")
+STEP 3: Set mood ← pipe(text)
+STEP 4: DISPLAY mood
+STEP 5: RETURN mood
+END MODEL
+```
+
+---
+
+## 🧪 Use Cases
+
+* 🤖 **AI Prototyping** — Build models with no boilerplate
+* 📊 **Data Visualization** — Generate graphs in plain language
+* 🧩 **Teaching & Learning** — Ideal for educators and CS students
+* 📜 **Explainable Logic** — Clear, self-documenting code
+
+---
+
+## 📁 Project Structure
+
+```
+explaincode/
+├── parser/
+│   └── explain_parser.py
+├── compiler/
+│   └── codegen.py
+├── interpreter/
+│   └── runner.py
+├── gui/
+│   └── explaincode_gui.py
+├── examples/
+│   ├── sentiment_analysis.modelx
+│   └── max_two.ec2
+└── README.md
+```
+
+---
+
+## 🧠 Future Plans
+
+* 🧰 Visual debugger + flowchart mode
+* 🤝 Real-time collaboration support
+* 🐍 OOP-style blocks and class support
+* 🧮 Built-in data structure tools
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! Feel free to fork, improve, and submit pull requests.
 
 ```bash
-python explaincode_compiler.py examples/add_numbers.epd
+git checkout -b feature/your-feature
+git commit -m "Added your feature"
+git push origin feature/your-feature
 ```
-
-You’ll be prompted to enter values for `a` and `b`, and the output will be returned.
 
 ---
 
-## 🧠 Example: Recursive Binary Search
+## 📄 License
 
-```epd
-ALGORITHM BinarySearchRecursive
-INPUT: A, target, low, high
-OUTPUT: c
-
-STEP 1: IF low > high THEN
-STEP 2:     Set c ← -1
-STEP 3:     RETURN c
-STEP 4: END IF
-
-STEP 5: Set mid ← (low + high) // 2
-STEP 6: IF A[mid] == target THEN
-STEP 7:     Set c ← mid
-STEP 8:     RETURN c
-STEP 9: END IF
-
-STEP 10: IF A[mid] < target THEN
-STEP 11:     Set c ← BinarySearchRecursive(A, target, mid + 1, high)
-STEP 12:     RETURN c
-STEP 13: ELSE
-STEP 14:     Set c ← BinarySearchRecursive(A, target, low, mid - 1)
-STEP 15:     RETURN c
-STEP 16: END IF
-```
-
-```
-
-ExplainCode/
-├── explaincode_lang/                  # 🔁 Python module for LSP + parser
-│   ├── __init__.py
-│   ├── parser.py                      # 💡 Parses and validates ExplainCode
-│   ├── lsp_server.py                  # ⚙️ LSP server for code editors
-├── examples/                          # 📂 Sample .epd programs
-│   ├── find_max.epd
-│   ├── sum_until_limit.epd
-├── explaincode_lang_server.py        # 🎯 LSP server entry point
-├── explaincode_compiler.py           # 🧠 Compiler/interpreter for .epd files
-├── requirements.txt                  # 📦 All required dependencies
-├── .gitignore                        # 🙈 Ignore unwanted files
-├── README.md                         # 📘 Full project documentation
-├── LICENSE                           # ⚖️ MIT or Apache 2.0 (optional, recommended)
-
-```
-
-## 📦 Future Features
-* [x] RECURSION support
-* [ ] Error reporting with line numbers
-* [ ] Function calls from `.epd` files
-* [ ] VS Code extension with syntax highlighting
-* [ ] Web-based visual playground
+This project is licensed under the MIT License.
+See [LICENSE](LICENSE) for more information.
 
 ---
 
-## 🙌 Contributing
+## 💬 Connect
 
-Feel free to open issues or PRs to suggest improvements or new features. This project is beginner-friendly and great for learning about parsers and compilers.
+For questions, feedback, or collaboration:
+
+* 📧 Email: [you@example.com](mailto:you@example.com)
+* 🌐 Website: [https://explaincode.ai](https://explaincode.ai)
+* 🐦 Twitter: [@explaincode](https://twitter.com/explaincode)
 
 ---
+
+Empowering ideas through code. One step at a time. ✨
+
+```
+
+---
+
+Let me know if you'd like:
+- The same content tailored for an academic repo
+- Auto-generated badges (PyPI, GitHub Actions, etc.)
+- Multi-language examples (e.g., integrating with JavaScript or C++)
+```
