@@ -1,8 +1,4 @@
-Here’s a polished `README.md` you can use for your ExplainCode 2.0 project on GitHub:
 
----
-
-````markdown
 # ExplainCode 2.0 🧠💡
 A Human-Centric Natural Language Programming Language for AI Workflows and Algorithmic Reasoning
 
