@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "explaincode"
+version = "2.0.0"
+description = "A Natural Language Programming Language for AI & Algorithms"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "PyQt5",
+    "transformers",
+    "torch",
+]
+
+[project.scripts]
+explaincode = "explaincode.compiler:main"
+explaincode-gui = "explaincode.interpreter:main"
+
+[tool.setuptools]
+packages = ["explaincode"]

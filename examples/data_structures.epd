@@ -1,0 +1,47 @@
+ALGORITHM DataStructuresDemo
+INPUT: name
+OUTPUT: result
+
+# Demonstrate LIST operations
+STEP 1: LIST numbers ← [5, 3, 8, 1, 9, 2]
+STEP 2: PRINT "Original list:"
+STEP 3: PRINT numbers
+
+# Append a new value
+STEP 4: APPEND numbers ← 7
+STEP 5: PRINT "After appending 7:"
+STEP 6: PRINT numbers
+
+# Remove a value
+STEP 7: REMOVE numbers ← 3
+STEP 8: PRINT "After removing 3:"
+STEP 9: PRINT numbers
+
+# Sort the list
+STEP 10: SORT numbers → sorted_nums
+STEP 11: PRINT "Sorted list:"
+STEP 12: PRINT sorted_nums
+
+# Filter: keep only values > 5
+STEP 13: FILTER sorted_nums WHERE x > 5 → big_nums
+STEP 14: PRINT "Numbers greater than 5:"
+STEP 15: PRINT big_nums
+
+# Map: double each value
+STEP 16: MAP sorted_nums WITH x * 2 → doubled
+STEP 17: PRINT "Doubled values:"
+STEP 18: PRINT doubled
+
+# Demonstrate DICT operations
+STEP 19: DICT person ← {"name": name, "age": 25, "city": "Delhi"}
+STEP 20: PRINT "Person dictionary:"
+STEP 21: PRINT person
+
+STEP 22: GET person["name"] → person_name
+STEP 23: PRINT "Person's name is:"
+STEP 24: PRINT person_name
+
+STEP 25: Set result ← "Data structures demo complete!"
+STEP 26: RETURN result
+
+END ALGORITHM

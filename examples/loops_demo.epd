@@ -1,0 +1,39 @@
+ALGORITHM LoopsDemo
+INPUT: limit
+OUTPUT: result
+
+STEP 1: PRINT "Advanced Loop Demo"
+STEP 2: PRINT "=================="
+
+# FOREACH loop demonstration
+STEP 3: LIST fruits ← ["apple", "banana", "cherry", "date"]
+STEP 4: PRINT "Fruits in the list:"
+STEP 5: FOREACH fruit IN fruits DO
+STEP 6:     PRINT fruit
+STEP 7: END FOREACH
+
+# FOR loop with CONTINUE
+STEP 8: PRINT "Numbers 1 to 10 (skip evens):"
+STEP 9: FOR i ← 1 to 10 DO
+STEP 10:    IF i % 2 == 0 THEN
+STEP 11:        CONTINUE
+STEP 12:    END IF
+STEP 13:    PRINT i
+STEP 14: END FOR
+
+# WHILE loop with BREAK
+STEP 15: PRINT "Counting until limit:"
+STEP 16: Set count ← 0
+STEP 17: WHILE count < 100 DO
+STEP 18:    Set count ← count + 1
+STEP 19:    PRINT count
+STEP 20:    IF count >= limit THEN
+STEP 21:        PRINT "Reached limit, breaking!"
+STEP 22:        BREAK
+STEP 23:    END IF
+STEP 24: END WHILE
+
+STEP 25: Set result ← count
+STEP 26: RETURN result
+
+END ALGORITHM
