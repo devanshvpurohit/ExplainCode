@@ -1,158 +1,117 @@
-
 # ExplainCode 2.0 🧠💡
-A Human-Centric Natural Language Programming Language for AI Workflows and Algorithmic Reasoning
+
+**ExplainCode 2.0** is a natural language programming language designed to bridge the gap between human logic and executable code. It allows you to build AI pipelines, manipulate data structures, and implement complex algorithms using a simple, readable syntax that "speaks your language."
 
 ---
 
-## 🌟 Overview
+## 🌟 Key Features (v2.0.0)
 
-**ExplainCode 2.0** is a domain-specific programming language that bridges the gap between natural logic and executable code. Designed for **AI prototyping**, **algorithmic education**, and **intuitive computing**, it allows users to write code using simple, human-readable steps.
-
-> No more confusing syntax. Just logic that *speaks your language*.
-
----
-
-## 🔧 Features
-
-- 🔤 **Natural Language Syntax** – Use keywords like `STEP`, `Set`, `IF`, `MODEL`, and `DISPLAY`
-- 🧠 **AI-Aware Constructs** – Seamless pipelines for sentiment analysis, visualization, ML models
-- ⚡ **Dual Execution** – Compile to Python *or* interpret directly for instant feedback
-- 🎓 **Education-Friendly** – Perfect for students learning algorithms and program flow
-- 🖥️ **PyQt5 IDE** – A complete GUI for editing, running, and debugging `.ec2` and `.modelx` files
+- 🤖 **AI Pipeline Support**: Native `LOAD_MODEL` and `PREDICT` steps using HuggingFace Transformers.
+- 🗃️ **Complex Data Structures**: First-class support for `LIST` and `DICT` with `APPEND`, `REMOVE`, and `GET`.
+- 📊 **Functional Utilities**: Built-in `SORT`, `FILTER`, `MAP`, and `REDUCE` operations.
+- ⚠️ **Robust Error Handling**: Python-style `TRY`/`CATCH` blocks for graceful failure management.
+- 🧠 **In-Memory Execution**: Direct execution of logic without residual intermediate files.
+- 🖥️ **Dual Interface**: Use the clean CLI for scripting or the interactive PyQt5 IDE for visual development.
 
 ---
 
 ## 📦 Installation
 
-### 1. Clone the Repository
-```bash
-git clone https://github.com/your-username/explaincode.git
-cd explaincode
-````
+To make ExplainCode available globally on your machine:
 
-### 2. Install Requirements
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/devanshvpurohit/ExplainCode.git
+   cd ExplainCode
+   ```
+
+2. **Install the package**:
+   ```bash
+   pip install .
+   ```
+
+---
+
+## 🚀 Usage
+
+### 🛠️ Command Line Interface
+Run your ExplainCode files (`.epd`, `.eai`) directly from the terminal:
 
 ```bash
-pip install -r requirements.txt
+# Run a script immediately
+explaincode examples/data_structures.epd
+
+# Run with verbose output (see generated Python)
+explaincode examples/data_structures.epd --verbose
+
+# Run and save the underlying Python source
+explaincode examples/data_structures.epd --save
 ```
 
-### 3. Run the IDE
-
+### 🎨 Interactive IDE
+Launch the visual editor and runner:
 ```bash
-python explaincode_gui.py
+explaincode-gui
 ```
 
 ---
 
-## 🚀 Hello, ExplainCode
+## 📜 Language Examples
 
-Here’s an example of finding the maximum of two numbers:
-
+### AI Sentiment Analysis
 ```plaintext
-DEFINE MaxOfTwo
-INPUT: a, b
-OUTPUT: result
-STEP 1: IF a > b THEN
-STEP 2:     Set result ← a
-STEP 3: ELSE
-STEP 4:     Set result ← b
-STEP 5: END IF
-STEP 6: DISPLAY result
-STEP 7: RETURN result
-END DEFINE
-```
-
-Or a sentiment analysis model using HuggingFace Transformers:
-
-```plaintext
-MODEL AnalyzeText
+MODEL AnalyzeSentiment
 INPUT: text
-OUTPUT: mood
-STEP 1: USE transformers
-STEP 2: Set pipe ← transformers.pipeline("sentiment-analysis")
-STEP 3: Set mood ← pipe(text)
-STEP 4: DISPLAY mood
-STEP 5: RETURN mood
+STEP 1: PRINT "Analyzing..."
+STEP 2: LOAD_MODEL "sentiment-analysis" → model
+STEP 3: PREDICT text → result
+STEP 4: PRINT result
+STEP 5: RETURN result
 END MODEL
 ```
 
----
-
-## 🧪 Use Cases
-
-* 🤖 **AI Prototyping** — Build models with no boilerplate
-* 📊 **Data Visualization** — Generate graphs in plain language
-* 🧩 **Teaching & Learning** — Ideal for educators and CS students
-* 📜 **Explainable Logic** — Clear, self-documenting code
+### Data Manipulation
+```plaintext
+ALGORITHM FilterHighNumbers
+INPUT: numbers
+STEP 1: SORT numbers → sorted_list
+STEP 2: FILTER sorted_list WHERE x > 50 → high_nums
+STEP 3: PRINT "High numbers found:"
+STEP 4: PRINT high_nums
+STEP 5: RETURN high_nums
+END ALGORITHM
+```
 
 ---
 
 ## 📁 Project Structure
 
 ```
-explaincode/
-├── parser/
-│   └── explain_parser.py
-├── compiler/
-│   └── codegen.py
-├── interpreter/
-│   └── runner.py
-├── gui/
-│   └── explaincode_gui.py
-├── examples/
-│   ├── sentiment_analysis.modelx
-│   └── max_two.ec2
-└── README.md
+ExplainCode/
+├── explaincode/                # Core Package Source
+│   ├── compiler.py             # Compiler & CLI logic
+│   ├── interpreter.py          # GUI & AST Interpreter
+│   └── lang/                   # Language Definitions
+├── examples/                   # Built-in demo scripts
+├── pyproject.toml              # Package configuration
+└── README.md                   # Documentation
 ```
 
 ---
 
-## 🧠 Future Plans
+## 🤝 Contributing & Support
 
-* 🧰 Visual debugger + flowchart mode
-* 🤝 Real-time collaboration support
-* 🐍 OOP-style blocks and class support
-* 🧮 Built-in data structure tools
+We welcome contributions! Fork the repo, add your features, and submit a PR.
 
----
-
-## 🤝 Contributing
-
-We welcome contributions! Feel free to fork, improve, and submit pull requests.
-
-```bash
-git checkout -b feature/your-feature
-git commit -m "Added your feature"
-git push origin feature/your-feature
-```
+- **Found a bug?** Open an [Issue](https://github.com/devanshvpurohit/ExplainCode/issues).
+- **Have a feature idea?** Start a discussion.
 
 ---
 
 ## 📄 License
 
 This project is licensed under the MIT License.
-See [LICENSE](LICENSE) for more information.
 
 ---
+*Empowering ideas through code. One step at a time.* ✨
 
-## 💬 Connect
-
-For questions, feedback, or collaboration:
-
-* 📧 Email: [you@example.com](mailto:you@example.com)
-* 🌐 Website: [https://explaincode.ai](https://explaincode.ai)
-* 🐦 Twitter: [@explaincode](https://twitter.com/explaincode)
-
----
-
-Empowering ideas through code. One step at a time. ✨
-
-```
-
----
-
-Let me know if you'd like:
-- The same content tailored for an academic repo
-- Auto-generated badges (PyPI, GitHub Actions, etc.)
-- Multi-language examples (e.g., integrating with JavaScript or C++)
-```
