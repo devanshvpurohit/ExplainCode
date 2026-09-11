@@ -57,7 +57,7 @@ CHALLENGES: List[Challenge] = [
 INPUT: 
 OUTPUT: marks
 
-STEP 1: Set marks ← 85
+STEP 1: Set marks == 85
 STEP 2: PRINT marks
 STEP 3: RETURN marks
 
@@ -71,8 +71,8 @@ END ALGORITHM""",
         ],
         hints=[
             "Hint 1: You need a variable to store the number 85.",
-            "Hint 2: In ExplainCode, variables are assigned using 'Set name ← value'.",
-            "Hint 3: Use 'STEP 1: Set marks ← 85' followed by 'STEP 2: PRINT marks' and 'RETURN marks'."
+            "Hint 2: In ExplainCode, variables are assigned using 'Set name == value'.",
+            "Hint 3: Use 'STEP 1: Set marks == 85' followed by 'STEP 2: PRINT marks' and 'RETURN marks'."
         ]
     ),
     Challenge(
@@ -85,7 +85,7 @@ END ALGORITHM""",
 INPUT: name
 OUTPUT: greeting
 
-STEP 1: Set greeting ← "Hello, " + name
+STEP 1: Set greeting == "Hello, " + name
 STEP 2: PRINT greeting
 STEP 3: RETURN greeting
 
@@ -105,7 +105,7 @@ END ALGORITHM""",
         hints=[
             "Hint 1: Notice the INPUT line specifies 'name'. You can use this variable directly.",
             "Hint 2: You can concatenate strings using the '+' operator.",
-            "Hint 3: Use 'Set greeting ← \"Hello, \" + name' and 'PRINT greeting'."
+            "Hint 3: Use 'Set greeting == \"Hello, \" + name' and 'PRINT greeting'."
         ]
     ),
     Challenge(
@@ -119,9 +119,9 @@ INPUT: num
 OUTPUT: result
 
 STEP 1: IF num > 0 THEN
-STEP 2:     Set result ← "Positive"
+STEP 2:     Set result == "Positive"
 STEP 3: ELSE
-STEP 4:     Set result ← "Negative or Zero"
+STEP 4:     Set result == "Negative or Zero"
 STEP 5: END IF
 STEP 6: RETURN result
 
@@ -156,10 +156,10 @@ END ALGORITHM""",
 INPUT: 
 OUTPUT: final_num
 
-STEP 1: FOR i ← 1 to 10 DO
+STEP 1: FOR i == 1 to 10 DO
 STEP 2:     PRINT i
 STEP 3: END FOR
-STEP 4: Set final_num ← 10
+STEP 4: Set final_num == 10
 STEP 5: RETURN final_num
 
 END ALGORITHM""",
@@ -172,7 +172,7 @@ END ALGORITHM""",
         ],
         hints=[
             "Hint 1: To repeat something 10 times, use a counting loop.",
-            "Hint 2: ExplainCode supports 'FOR i ← 1 to 10 DO' ... 'END FOR'.",
+            "Hint 2: ExplainCode supports 'FOR i == 1 to 10 DO' ... 'END FOR'.",
             "Hint 3: Inside the loop, add 'PRINT i' to output each number."
         ]
     ),
@@ -186,10 +186,10 @@ END ALGORITHM""",
 INPUT: numbers
 OUTPUT: largest
 
-STEP 1: Set largest ← numbers[0]
+STEP 1: Set largest == numbers[0]
 STEP 2: FOREACH num IN numbers DO
 STEP 3:     IF num > largest THEN
-STEP 4:         Set largest ← num
+STEP 4:         Set largest == num
 STEP 5:     END IF
 STEP 6: END FOREACH
 STEP 7: RETURN largest
@@ -212,7 +212,7 @@ END ALGORITHM""",
         hints=[
             "Hint 1: Start by assuming the first item 'numbers[0]' is currently the largest.",
             "Hint 2: Iterate through every element in 'numbers' with FOREACH.",
-            "Hint 3: Compare each number: if num > largest, update largest ← num."
+            "Hint 3: Compare each number: if num > largest, update largest == num."
         ]
     ),
     Challenge(
@@ -225,7 +225,7 @@ END ALGORITHM""",
 INPUT: x
 OUTPUT: squared
 
-STEP 1: Set squared ← x * x
+STEP 1: Set squared == x * x
 STEP 2: RETURN squared
 
 END ALGORITHM""",
@@ -259,9 +259,9 @@ END ALGORITHM""",
 INPUT: numbers, limit
 OUTPUT: total
 
-STEP 1: Set total ← 0
+STEP 1: Set total == 0
 STEP 2: FOREACH num IN numbers DO
-STEP 3:     Set total ← total + num
+STEP 3:     Set total == total + num
 STEP 4:     IF total > limit THEN
 STEP 5:         BREAK
 STEP 6:     END IF

@@ -46,7 +46,7 @@ def test_challenge_validation_failure():
 INPUT:
 OUTPUT: marks
 
-STEP 1: Set marks ← 42
+STEP 1: Set marks == 42
 STEP 2: RETURN marks
 
 END ALGORITHM"""

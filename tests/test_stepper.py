@@ -11,9 +11,9 @@ def test_step_execution_and_variable_tracking():
     code = [
         "ALGORITHM StepVars",
         "INPUT:",
-        "STEP 1: Set a ← 10",
-        "STEP 2: Set b ← 20",
-        "STEP 3: Set sum ← a + b",
+        "STEP 1: Set a == 10",
+        "STEP 2: Set b == 20",
+        "STEP 3: Set sum == a + b",
         "STEP 4: RETURN sum",
         "END ALGORITHM"
     ]
@@ -49,9 +49,9 @@ def test_if_execution_branching():
         "ALGORITHM BranchTest",
         "INPUT: x",
         "STEP 1: IF x > 5 THEN",
-        "STEP 2:     Set status ← \"high\"",
+        "STEP 2:     Set status == \"high\"",
         "STEP 3: ELSE",
-        "STEP 4:     Set status ← \"low\"",
+        "STEP 4:     Set status == \"low\"",
         "STEP 5: END IF",
         "STEP 6: RETURN status",
         "END ALGORITHM"
@@ -79,9 +79,9 @@ def test_for_execution_iteration():
     code = [
         "ALGORITHM ForTest",
         "INPUT:",
-        "STEP 1: Set total ← 0",
-        "STEP 2: FOR i ← 1 to 3 DO",
-        "STEP 3:     Set total ← total + i",
+        "STEP 1: Set total == 0",
+        "STEP 2: FOR i == 1 to 3 DO",
+        "STEP 3:     Set total == total + i",
         "STEP 4: END FOR",
         "STEP 5: RETURN total",
         "END ALGORITHM"
@@ -99,11 +99,11 @@ def test_foreach_and_break_execution():
     code = [
         "ALGORITHM ForeachBreak",
         "INPUT:",
-        "STEP 1: LIST nums ← [2, 4, 9, 8]",
-        "STEP 2: Set found_odd ← 0",
+        "STEP 1: LIST nums == [2, 4, 9, 8]",
+        "STEP 2: Set found_odd == 0",
         "STEP 3: FOREACH n IN nums DO",
         "STEP 4:     IF n % 2 != 0 THEN",
-        "STEP 5:         Set found_odd ← n",
+        "STEP 5:         Set found_odd == n",
         "STEP 6:         BREAK",
         "STEP 7:     END IF",
         "STEP 8: END FOREACH",
@@ -122,10 +122,10 @@ def test_while_execution():
     code = [
         "ALGORITHM WhileTest",
         "INPUT: n",
-        "STEP 1: Set count ← 0",
+        "STEP 1: Set count == 0",
         "STEP 2: WHILE n > 0 DO",
-        "STEP 3:     Set count ← count + 1",
-        "STEP 4:     Set n ← n - 1",
+        "STEP 3:     Set count == count + 1",
+        "STEP 4:     Set n == n - 1",
         "STEP 5: END WHILE",
         "STEP 6: RETURN count",
         "END ALGORITHM"
@@ -143,8 +143,8 @@ def test_reset_functionality():
     code = [
         "ALGORITHM ResetTest",
         "INPUT: start",
-        "STEP 1: Set count ← start",
-        "STEP 2: Set count ← count + 10",
+        "STEP 1: Set count == start",
+        "STEP 2: Set count == count + 10",
         "STEP 3: RETURN count",
         "END ALGORITHM"
     ]

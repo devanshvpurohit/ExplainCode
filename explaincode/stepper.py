@@ -100,7 +100,7 @@ class ExplainCodeStepper:
         """Converts an AST statement node into readable ExplainCode syntax."""
         t = stmt.get("type", "")
         if t == "assign":
-            return f"SET {stmt.get('target')} ← {stmt.get('value')}"
+            return f"SET {stmt.get('target')} == {stmt.get('value')}"
         elif t == "print":
             return f"PRINT {stmt.get('value')}"
         elif t == "if":
@@ -110,7 +110,7 @@ class ExplainCodeStepper:
         elif t == "endif":
             return "END IF"
         elif t == "for":
-            return f"FOR {stmt.get('var')} ← {stmt.get('start')} to {stmt.get('end')} DO"
+            return f"FOR {stmt.get('var')} == {stmt.get('start')} to {stmt.get('end')} DO"
         elif t == "endfor":
             return "END FOR"
         elif t == "foreach":
@@ -128,13 +128,13 @@ class ExplainCodeStepper:
         elif t == "return":
             return f"RETURN {stmt.get('value')}"
         elif t == "list_create":
-            return f"LIST {stmt.get('name')} ← {stmt.get('value')}"
+            return f"LIST {stmt.get('name')} == {stmt.get('value')}"
         elif t == "dict_create":
-            return f"DICT {stmt.get('name')} ← {stmt.get('value')}"
+            return f"DICT {stmt.get('name')} == {stmt.get('value')}"
         elif t == "list_append":
-            return f"APPEND {stmt.get('list_name')} ← {stmt.get('value')}"
+            return f"APPEND {stmt.get('list_name')} == {stmt.get('value')}"
         elif t == "list_remove":
-            return f"REMOVE {stmt.get('list_name')} ← {stmt.get('value')}"
+            return f"REMOVE {stmt.get('list_name')} == {stmt.get('value')}"
         elif t == "get_value":
             return f"GET {stmt.get('source')} → {stmt.get('target')}"
         elif t == "sort":

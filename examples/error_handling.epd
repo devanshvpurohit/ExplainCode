@@ -8,13 +8,13 @@ STEP 2: PRINT "==================="
 # Try a safe division
 STEP 3: TRY
 STEP 4:     PRINT "Attempting division..."
-STEP 5:     Set result ← x / y
+STEP 5:     Set result == x / y
 STEP 6:     PRINT "Division successful!"
 STEP 7:     PRINT result
 STEP 8: CATCH error
 STEP 9:     PRINT "An error occurred:"
 STEP 10:    PRINT error
-STEP 11:    Set result ← 0
+STEP 11:    Set result == 0
 STEP 12: END TRY
 
 STEP 13: PRINT "Final result:"
@@ -22,7 +22,7 @@ STEP 14: PRINT result
 
 # Try another risky operation
 STEP 15: TRY
-STEP 16:    Set risky ← int("not_a_number")
+STEP 16:    Set risky == int("not_a_number")
 STEP 17: CATCH err
 STEP 18:    PRINT "Caught another error:"
 STEP 19:    PRINT err

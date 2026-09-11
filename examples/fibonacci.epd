@@ -2,7 +2,7 @@ ALGORITHM Fibonacci
 INPUT: n
 OUTPUT: sequence
 
-STEP 1: SET sequence ← []
+STEP 1: SET sequence == []
 STEP 2: IF n == 0 THEN
 STEP 3:     RETURN sequence
 STEP 4: END IF
@@ -11,8 +11,8 @@ STEP 6: IF n == 1 THEN
 STEP 7:     RETURN sequence
 STEP 8: END IF
 STEP 9: sequence.append(1)
-STEP 10: FOR i ← 2 to n-1 DO
-STEP 11:     SET next_val ← sequence[i-1] + sequence[i-2]
+STEP 10: FOR i == 2 to n-1 DO
+STEP 11:     SET next_val == sequence[i-1] + sequence[i-2]
 STEP 12:     sequence.append(next_val)
 STEP 13: END FOR
 STEP 14: DISPLAY sequence

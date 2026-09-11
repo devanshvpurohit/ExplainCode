@@ -2,8 +2,8 @@ ALGORITHM FizzBuzz
 INPUT: n
 OUTPUT: result_list
 
-STEP 1: SET result_list ← []
-STEP 2: FOR i ← 1 to n DO
+STEP 1: SET result_list == []
+STEP 2: FOR i == 1 to n DO
 STEP 3:     IF i % 15 == 0 THEN
 STEP 4:         result_list.append("FizzBuzz")
 STEP 5:         CONTINUE

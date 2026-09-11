@@ -52,7 +52,7 @@ class ExplainCodeParser:
 
         # === ASSIGNMENT ===
         if content.startswith(("Set", "SET")):
-            m = re.match(r"(?:Set|SET)\s+(.+?)\s+←\s+(.+)", content)
+            m = re.match(r"(?:Set|SET)\s+(.+?)\s+==\s+(.+)", content)
             if m:
                 return {"type": "assign", "target": m.group(1), "value": m.group(2)}
         
@@ -68,7 +68,7 @@ class ExplainCodeParser:
             if m:
                 return {"type": "foreach", "var": m.group(1), "iterable": m.group(2)}
         elif content.startswith("FOR"):
-            m = re.match(r"FOR\s+(.+?)\s+←\s+(.+?)\s+to\s+(.+?)\s+DO", content)
+            m = re.match(r"FOR\s+(.+?)\s+==\s+(.+?)\s+to\s+(.+?)\s+DO", content)
             if m:
                 return {"type": "for", "var": m.group(1), "start": m.group(2), "end": m.group(3)}
         elif content.startswith("WHILE"):
@@ -97,19 +97,19 @@ class ExplainCodeParser:
         
         # === DATA STRUCTURES ===
         elif content.startswith("LIST"):
-            m = re.match(r"LIST\s+(\w+)\s+←\s+(.+)", content)
+            m = re.match(r"LIST\s+(\w+)\s+==\s+(.+)", content)
             if m:
                 return {"type": "list_create", "name": m.group(1), "value": m.group(2)}
         elif content.startswith("DICT"):
-            m = re.match(r"DICT\s+(\w+)\s+←\s+(.+)", content)
+            m = re.match(r"DICT\s+(\w+)\s+==\s+(.+)", content)
             if m:
                 return {"type": "dict_create", "name": m.group(1), "value": m.group(2)}
         elif content.startswith("APPEND"):
-            m = re.match(r"APPEND\s+(\w+)\s+←\s+(.+)", content)
+            m = re.match(r"APPEND\s+(\w+)\s+==\s+(.+)", content)
             if m:
                 return {"type": "list_append", "list_name": m.group(1), "value": m.group(2)}
         elif content.startswith("REMOVE"):
-            m = re.match(r"REMOVE\s+(\w+)\s+←\s+(.+)", content)
+            m = re.match(r"REMOVE\s+(\w+)\s+==\s+(.+)", content)
             if m:
                 return {"type": "list_remove", "list_name": m.group(1), "value": m.group(2)}
         elif content.startswith("GET"):
@@ -154,7 +154,7 @@ class ExplainCodeParser:
         
         # === OOP ===
         elif content.startswith("CREATE"):
-            m = re.match(r"CREATE\s+(\w+)\s+←\s+(\w+)\((.*?)\)", content)
+            m = re.match(r"CREATE\s+(\w+)\s+==\s+(\w+)\((.*?)\)", content)
             if m:
                 args = [a.strip() for a in m.group(3).split(",")] if m.group(3) else []
                 return {"type": "create_instance", "var": m.group(1), "class_name": m.group(2), "args": args}

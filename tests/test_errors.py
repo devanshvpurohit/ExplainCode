@@ -57,15 +57,15 @@ def test_syntax_missing_assignment_arrow():
     ]
     report = ErrorTutor.diagnose_syntax(code)
     assert report is not None
-    assert "missing the arrow operator '←'" in report.problem
-    assert "Replace '=' with the arrow operator '←'" in report.suggestion
+    assert "missing the operator '=='" in report.problem
+    assert "Replace '=' with the operator '=='" in report.suggestion
 
 
 def test_syntax_missing_loop_terminator():
     code = [
         "ALGORITHM UnclosedLoop",
         "INPUT:",
-        "STEP 1: FOR i ← 1 to 5 DO",
+        "STEP 1: FOR i == 1 to 5 DO",
         "STEP 2:     PRINT i",
         "END ALGORITHM"
     ]
@@ -85,7 +85,7 @@ def test_runtime_name_error():
 
 def test_runtime_zero_division():
     exc = ZeroDivisionError("division by zero")
-    report = ErrorTutor.diagnose_runtime(exc, current_statement="Set res ← a / b")
+    report = ErrorTutor.diagnose_runtime(exc, current_statement="Set res == a / b")
     assert "Attempted to divide a number by zero" in report.problem
     assert "ZeroDivisionError" in report.technical_error
 

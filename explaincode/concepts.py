@@ -18,7 +18,7 @@ CONCEPT_DEFINITIONS = {
     "assignment": {
         "title": "Variable Assignment",
         "category": "Data Storage",
-        "description": "SET creates or updates a variable and assigns it an initial or new value using the arrow '←'.",
+        "description": "SET creates or updates a variable and assigns it an initial or new value using the arrow '=='.",
         "python_equivalent": "Python uses the '=' symbol for assignment: variable_name = value"
     },
     "input": {
@@ -170,7 +170,7 @@ class ConceptExplainer:
                         "examples_in_code": []
                     }
                 detected["assignment"]["examples_in_code"].append(
-                    f"Set {stmt.get('target')} ← {stmt.get('value')}"
+                    f"Set {stmt.get('target')} == {stmt.get('value')}"
                 )
                 if "variables" not in detected:
                     detected["variables"] = {
@@ -208,7 +208,7 @@ class ConceptExplainer:
                     }
                 if stype == "for":
                     detected["for_loop"]["examples_in_code"].append(
-                        f"FOR {stmt.get('var')} ← {stmt.get('start')} to {stmt.get('end')} DO"
+                        f"FOR {stmt.get('var')} == {stmt.get('start')} to {stmt.get('end')} DO"
                     )
 
             elif stype in ("foreach", "endforeach"):
@@ -259,11 +259,11 @@ class ConceptExplainer:
                         "examples_in_code": []
                     }
                 if stype == "list_create":
-                    detected["lists"]["examples_in_code"].append(f"LIST {stmt.get('name')} ← {stmt.get('value')}")
+                    detected["lists"]["examples_in_code"].append(f"LIST {stmt.get('name')} == {stmt.get('value')}")
                 elif stype == "list_append":
-                    detected["lists"]["examples_in_code"].append(f"APPEND {stmt.get('list_name')} ← {stmt.get('value')}")
+                    detected["lists"]["examples_in_code"].append(f"APPEND {stmt.get('list_name')} == {stmt.get('value')}")
                 elif stype == "list_remove":
-                    detected["lists"]["examples_in_code"].append(f"REMOVE {stmt.get('list_name')} ← {stmt.get('value')}")
+                    detected["lists"]["examples_in_code"].append(f"REMOVE {stmt.get('list_name')} == {stmt.get('value')}")
 
             elif stype in ("dict_create", "get_value"):
                 if "dictionaries" not in detected:
@@ -273,7 +273,7 @@ class ConceptExplainer:
                         "examples_in_code": []
                     }
                 if stype == "dict_create":
-                    detected["dictionaries"]["examples_in_code"].append(f"DICT {stmt.get('name')} ← {stmt.get('value')}")
+                    detected["dictionaries"]["examples_in_code"].append(f"DICT {stmt.get('name')} == {stmt.get('value')}")
                 elif stype == "get_value":
                     detected["dictionaries"]["examples_in_code"].append(f"GET {stmt.get('source')} → {stmt.get('target')}")
 

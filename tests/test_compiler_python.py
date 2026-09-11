@@ -16,7 +16,7 @@ def test_compiler_basic_assignment_and_print():
     code = [
         "ALGORITHM SimpleAdd",
         "INPUT: a, b",
-        "STEP 1: Set result ← a + b",
+        "STEP 1: Set result == a + b",
         "STEP 2: PRINT result",
         "STEP 3: RETURN result",
         "END ALGORITHM"
@@ -66,7 +66,7 @@ def test_compiler_loops_and_control():
     code = [
         "ALGORITHM LoopTest",
         "INPUT: n",
-        "STEP 1: FOR i ← 1 to n DO",
+        "STEP 1: FOR i == 1 to n DO",
         "STEP 2:     IF i == 3 THEN",
         "STEP 3:         CONTINUE",
         "STEP 4:     END IF",
@@ -87,10 +87,10 @@ def test_compiler_data_structures():
     code = [
         "ALGORITHM DataTest",
         "INPUT:",
-        "STEP 1: LIST items ← [1, 2, 3]",
-        "STEP 2: APPEND items ← 4",
-        "STEP 3: REMOVE items ← 1",
-        "STEP 4: DICT d ← {\"k\": 10}",
+        "STEP 1: LIST items == [1, 2, 3]",
+        "STEP 2: APPEND items == 4",
+        "STEP 3: REMOVE items == 1",
+        "STEP 4: DICT d == {\"k\": 10}",
         "STEP 5: GET d[\"k\"] → val",
         "STEP 6: RETURN val",
         "END ALGORITHM"

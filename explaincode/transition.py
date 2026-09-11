@@ -65,7 +65,7 @@ TRANSITION_EXERCISES: List[TransitionExercise] = [
 INPUT:
 OUTPUT: x
 
-STEP 1: Set x ← 10
+STEP 1: Set x == 10
 STEP 2: RETURN x
 
 END ALGORITHM""",
@@ -117,9 +117,9 @@ END ALGORITHM""",
 INPUT:
 OUTPUT: total
 
-STEP 1: Set total ← 0
-STEP 2: FOR i ← 1 to 5 DO
-STEP 3:     Set total ← total + i
+STEP 1: Set total == 0
+STEP 2: FOR i == 1 to 5 DO
+STEP 3:     Set total == total + i
 STEP 4: END FOR
 STEP 5: RETURN total
 
@@ -175,7 +175,7 @@ END ALGORITHM""",
 INPUT: x
 OUTPUT: result
 
-STEP 1: Set result ← x * x
+STEP 1: Set result == x * x
 STEP 2: RETURN result
 
 END ALGORITHM""",

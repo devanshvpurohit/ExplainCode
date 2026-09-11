@@ -3,17 +3,17 @@ INPUT: name
 OUTPUT: result
 
 # Demonstrate LIST operations
-STEP 1: LIST numbers ← [5, 3, 8, 1, 9, 2]
+STEP 1: LIST numbers == [5, 3, 8, 1, 9, 2]
 STEP 2: PRINT "Original list:"
 STEP 3: PRINT numbers
 
 # Append a new value
-STEP 4: APPEND numbers ← 7
+STEP 4: APPEND numbers == 7
 STEP 5: PRINT "After appending 7:"
 STEP 6: PRINT numbers
 
 # Remove a value
-STEP 7: REMOVE numbers ← 3
+STEP 7: REMOVE numbers == 3
 STEP 8: PRINT "After removing 3:"
 STEP 9: PRINT numbers
 
@@ -33,7 +33,7 @@ STEP 17: PRINT "Doubled values:"
 STEP 18: PRINT doubled
 
 # Demonstrate DICT operations
-STEP 19: DICT person ← {"name": name, "age": 25, "city": "Delhi"}
+STEP 19: DICT person == {"name": name, "age": 25, "city": "Delhi"}
 STEP 20: PRINT "Person dictionary:"
 STEP 21: PRINT person
 
@@ -41,7 +41,7 @@ STEP 22: GET person["name"] → person_name
 STEP 23: PRINT "Person's name is:"
 STEP 24: PRINT person_name
 
-STEP 25: Set result ← "Data structures demo complete!"
+STEP 25: Set result == "Data structures demo complete!"
 STEP 26: RETURN result
 
 END ALGORITHM

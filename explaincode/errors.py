@@ -104,14 +104,14 @@ class ErrorTutor:
             # Strip STEP N: prefix if present for statement classification
             content = re.sub(r"^STEP\s+\d+:?\s*", "", stripped).strip()
 
-            # Check assignment arrow
-            if re.search(r"^(?:Set|SET)\b", content) and "←" not in content:
+            # Check assignment operator
+            if re.search(r"^(?:Set|SET)\b", content) and "==" not in content:
                 return ErrorReport(
-                    problem="The assignment is missing the arrow operator '←'.",
-                    concept="ExplainCode uses the left arrow '←' to assign values to variables.",
-                    expected="SET variable_name ← value",
-                    suggestion="Replace '=' with the arrow operator '←' (e.g. SET total ← 0).",
-                    technical_error="SyntaxError: Missing assignment operator '←'",
+                    problem="The assignment is missing the operator '=='.",
+                    concept="ExplainCode uses '==' to assign values to variables.",
+                    expected="SET variable_name == value",
+                    suggestion="Replace '=' with the operator '==' (e.g. SET total == 0).",
+                    technical_error="SyntaxError: Missing assignment operator '=='",
                     line_number=idx,
                     source_line=line
                 )
@@ -152,7 +152,7 @@ class ErrorTutor:
                     return ErrorReport(
                         problem="Found an extra 'END FOR' without a matching 'FOR'.",
                         concept="END FOR closes a loop block, but no active loop was found.",
-                        expected="FOR i ← 1 to N DO\n    ...\nEND FOR",
+                        expected="FOR i == 1 to N DO\n    ...\nEND FOR",
                         suggestion="Remove this redundant loop terminator.",
                         technical_error="SyntaxError: Unmatched 'END FOR'",
                         line_number=idx,
@@ -164,7 +164,7 @@ class ErrorTutor:
                     return ErrorReport(
                         problem="The loop statement is missing 'DO'.",
                         concept="Loops in ExplainCode end their header line with 'DO'.",
-                        expected="FOR i ← 1 to 10 DO\n    ...\nEND FOR",
+                        expected="FOR i == 1 to 10 DO\n    ...\nEND FOR",
                         suggestion="Add 'DO' at the end of the loop header.",
                         technical_error="SyntaxError: Missing DO in loop header",
                         line_number=idx,
@@ -236,7 +236,7 @@ class ErrorTutor:
             return ErrorReport(
                 problem="The algorithm is missing END FOR / END FOREACH.",
                 concept="Every FOR or FOREACH loop must be closed with END FOR or END FOREACH.",
-                expected="FOR i ← 1 to N DO\n    ...\nEND FOR",
+                expected="FOR i == 1 to N DO\n    ...\nEND FOR",
                 suggestion=f"Add END FOR after the loop block that started on Line {start_line}.",
                 technical_error=f"SyntaxError: Unclosed loop block starting at line {start_line}",
                 line_number=start_line
@@ -278,7 +278,7 @@ class ErrorTutor:
             return ErrorReport(
                 problem=f"Variable '{var}' was used before it was given a value.",
                 concept="Variables must be created or defined with SET or INPUT before they can be read.",
-                expected=f"SET {var} ← 0\n... or ...\nINPUT: {var}",
+                expected=f"SET {var} == 0\n... or ...\nINPUT: {var}",
                 suggestion=f"Initialize '{var}' with SET before line where it is used.",
                 technical_error=f"{err_type}: {err_msg}",
                 source_line=current_statement
@@ -288,7 +288,7 @@ class ErrorTutor:
             return ErrorReport(
                 problem="Attempted to divide a number by zero.",
                 concept="Division by zero is mathematically undefined and causes computers to stop.",
-                expected="IF divisor != 0 THEN\n    SET result ← number / divisor\nEND IF",
+                expected="IF divisor != 0 THEN\n    SET result == number / divisor\nEND IF",
                 suggestion="Add an IF check to verify the divisor is not zero before dividing.",
                 technical_error=f"{err_type}: {err_msg}",
                 source_line=current_statement
@@ -298,7 +298,7 @@ class ErrorTutor:
             return ErrorReport(
                 problem="Tried to access an item at an index that does not exist in the list.",
                 concept="Lists are indexed starting at 0 up to len - 1. Accessing beyond that causes an IndexError.",
-                expected="IF index < len(my_list) THEN\n    SET item ← my_list[index]\nEND IF",
+                expected="IF index < len(my_list) THEN\n    SET item == my_list[index]\nEND IF",
                 suggestion="Check the list length before indexing or adjust loop bounds.",
                 technical_error=f"{err_type}: {err_msg}",
                 source_line=current_statement
@@ -308,7 +308,7 @@ class ErrorTutor:
             return ErrorReport(
                 problem=f"Key {err_msg} was not found in the dictionary.",
                 concept="Dictionaries store values under specific keys. You cannot read a key that has not been stored.",
-                expected="DICT data ← {'key': value}\nGET data['key'] → result",
+                expected="DICT data == {'key': value}\nGET data['key'] → result",
                 suggestion="Check that the key name is spelled correctly and exists in the dictionary.",
                 technical_error=f"{err_type}: {err_msg}",
                 source_line=current_statement
@@ -319,7 +319,7 @@ class ErrorTutor:
                 return ErrorReport(
                     problem="Tried to access an item using brackets [ ] on a value that is not a list or collection (such as an integer).",
                     concept="Indexing (e.g. A[0]) requires a collection such as a LIST (e.g. [12, 5, 8]). A single number cannot be indexed.",
-                    expected="Pass a list with brackets: [12, 5, 8] or define: LIST A ← [12, 5, 8]",
+                    expected="Pass a list with brackets: [12, 5, 8] or define: LIST A == [12, 5, 8]",
                     suggestion="When entering inputs for lists, provide values enclosed in square brackets, e.g. [12, 5, 8].",
                     technical_error=f"{err_type}: {err_msg}",
                     source_line=current_statement
@@ -327,7 +327,7 @@ class ErrorTutor:
             return ErrorReport(
                 problem="Operation attempted on incompatible data types.",
                 concept="Operations require matching types (for example, you cannot add text to a number directly).",
-                expected="SET text ← str(number)  # or ensure both operands are numbers",
+                expected="SET text == str(number)  # or ensure both operands are numbers",
                 suggestion="Check the types of the variables involved in this step.",
                 technical_error=f"{err_type}: {err_msg}",
                 source_line=current_statement

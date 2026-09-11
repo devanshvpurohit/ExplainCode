@@ -26,7 +26,7 @@ def test_variable_and_assignment_concept():
     code = [
         "ALGORITHM AssignDemo",
         "INPUT: x",
-        "STEP 1: Set total ← 0",
+        "STEP 1: Set total == 0",
         "STEP 2: PRINT total",
         "STEP 3: RETURN total",
         "END ALGORITHM"
@@ -72,7 +72,7 @@ def test_loops_break_continue_concepts():
     code = [
         "ALGORITHM LoopDemo",
         "INPUT: limit",
-        "STEP 1: FOR i ← 1 to 10 DO",
+        "STEP 1: FOR i == 1 to 10 DO",
         "STEP 2:     IF i == 5 THEN",
         "STEP 3:         CONTINUE",
         "STEP 4:     END IF",
@@ -82,7 +82,7 @@ def test_loops_break_continue_concepts():
         "STEP 8:     PRINT item",
         "STEP 9: END FOREACH",
         "STEP 10: WHILE limit > 0 DO",
-        "STEP 11:    Set limit ← limit - 1",
+        "STEP 11:    Set limit == limit - 1",
         "STEP 12:    IF limit == 0 THEN",
         "STEP 13:        BREAK",
         "STEP 14:    END IF",
@@ -107,10 +107,10 @@ def test_data_structures_and_functional_concepts():
     code = [
         "ALGORITHM DataProc",
         "INPUT: items",
-        "STEP 1: LIST nums ← [1, 2, 3]",
-        "STEP 2: APPEND nums ← 4",
-        "STEP 3: REMOVE nums ← 1",
-        "STEP 4: DICT user ← {\"name\": \"Bob\"}",
+        "STEP 1: LIST nums == [1, 2, 3]",
+        "STEP 2: APPEND nums == 4",
+        "STEP 3: REMOVE nums == 1",
+        "STEP 4: DICT user == {\"name\": \"Bob\"}",
         "STEP 5: GET user[\"name\"] → uname",
         "STEP 6: MAP nums WITH x * 2 → doubled",
         "STEP 7: FILTER nums WHERE x > 2 → filtered",
@@ -139,7 +139,7 @@ def test_error_handling_and_functions_concept():
         "STEP 1: TRY",
         "STEP 2:     CALL compute(a, b) → res",
         "STEP 3: CATCH err",
-        "STEP 4:     Set res ← 0",
+        "STEP 4:     Set res == 0",
         "STEP 5: END TRY",
         "STEP 6: RETURN res",
         "END ALGORITHM"

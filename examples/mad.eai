@@ -5,7 +5,7 @@ OUTPUT: None
 STEP 1: Import tkinter
 STEP 2: Import matplotlib.pyplot
 
-STEP 3: Set root ← tkinter.Tk()
+STEP 3: Set root == tkinter.Tk()
 STEP 4: root.title("Hello from ExplainAI")
 STEP 5: tkinter.Label(root, text="Hi " + name).pack()
 STEP 6: tkinter.Button(root, text="Close", command=root.destroy).pack()
