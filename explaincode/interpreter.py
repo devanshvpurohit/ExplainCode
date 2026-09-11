@@ -12,12 +12,8 @@ from PyQt5.QtCore import Qt
 
 from .compiler import ExplainAICompiler, ExplainCodeCompiler
 from .stepper import ExplainCodeStepper
-from .concepts import ConceptExplainer, explain_code
 from .errors import ErrorTutor
-from .challenges import CHALLENGES, get_challenge_by_id
-from .progression import ProgressionTracker
-from .analytics import ResearchAnalytics
-from .learning_gui import ProgramStateWidget, ConceptWidget, ChallengeWidget
+from .learning_gui import ProgramStateWidget
 
 
 class ExplainCodeParser:
@@ -411,10 +407,8 @@ class ExplainCodeInterpreter:
 class ExplainCodeApp(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("ExplainCode 2.0 — Learning & Development Environment (PyQt5)")
+        self.setWindowTitle("ExplainCode 3.0 — Programming Environment")
         self.setGeometry(150, 100, 1100, 720)
-        self.progression = ProgressionTracker()
-        self.analytics = ResearchAnalytics(enabled=True)
         self.stepper = None
         self.init_ui()
 
@@ -549,30 +543,6 @@ class ExplainCodeApp(QWidget):
                 self.editor.setText(f.read())
             self.status.setText(f"📄 Loaded: {os.path.basename(path)}")
             self.update_python_view()
-
-    def explain_concepts(self):
-        code_lines = self.editor.toPlainText().splitlines()
-        syntax_err = ErrorTutor.diagnose_syntax(code_lines)
-        if syntax_err:
-            self.output.setText(syntax_err.to_formatted_string())
-            self.tabs.setCurrentIndex(0)
-            self.status.setText("❌ Syntax error in code. See output for explanation.")
-            return
-
-        try:
-            parser = ExplainCodeParser()
-            ast_tree = parser.parse(code_lines)
-            explainer = ConceptExplainer()
-            concepts = explainer.explain_ast(ast_tree)
-            formatted = explainer.format_explanations_text(concepts)
-            self.concept_widget.set_explanation(formatted)
-            self.tabs.setCurrentIndex(2)  # Concepts tab
-            self.status.setText(f"💡 Explained {len(concepts)} programming concept(s).")
-        except Exception as e:
-            err = ErrorTutor.diagnose_runtime(e)
-            self.output.setText(err.to_formatted_string())
-            self.tabs.setCurrentIndex(0)
-            self.status.setText("❌ Failed to explain concepts.")
 
     def step_code(self):
         code_lines = self.editor.toPlainText().splitlines()
