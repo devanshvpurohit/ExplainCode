@@ -1,0 +1,108 @@
+{
+  "name": "explaincode",
+  "displayName": "ExplainCode 2.0 - Learning Programming Environment",
+  "description": "Learning-oriented programming environment for ExplainCode: concept explanations, visual execution, Python equivalence, and challenges.",
+  "version": "2.0.0",
+  "publisher": "devanshvpurohit",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Education",
+    "Linters"
+  ],
+  "main": "./extension.js",
+  "activationEvents": [
+    "onLanguage:explaincode",
+    "onCommand:explaincode.showPython",
+    "onCommand:explaincode.explainConcepts",
+    "onCommand:explaincode.openLearningMode",
+    "onCommand:explaincode.runFile",
+    "onCommand:explaincode.openChallenges"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "explaincode",
+        "aliases": [
+          "ExplainCode",
+          "explaincode"
+        ],
+        "extensions": [
+          ".epd",
+          ".eai",
+          ".explain"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "explaincode",
+        "scopeName": "source.explaincode",
+        "path": "./syntaxes/explaincode.tmLanguage.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "explaincode.showPython",
+        "title": "ExplainCode: Show Equivalent Python",
+        "icon": "$(file-code)"
+      },
+      {
+        "command": "explaincode.explainConcepts",
+        "title": "ExplainCode: Explain Concepts",
+        "icon": "$(lightbulb)"
+      },
+      {
+        "command": "explaincode.openLearningMode",
+        "title": "ExplainCode: Open Learning Mode GUI",
+        "icon": "$(play)"
+      },
+      {
+        "command": "explaincode.runFile",
+        "title": "ExplainCode: Run File in Terminal",
+        "icon": "$(run)"
+      },
+      {
+        "command": "explaincode.openChallenges",
+        "title": "ExplainCode: Open Learning Challenges",
+        "icon": "$(trophy)"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "explaincode.showPython",
+          "when": "resourceExtname == .epd || resourceExtname == .eai || resourceExtname == .explain",
+          "group": "navigation@1"
+        },
+        {
+          "command": "explaincode.explainConcepts",
+          "when": "resourceExtname == .epd || resourceExtname == .eai || resourceExtname == .explain",
+          "group": "navigation@2"
+        },
+        {
+          "command": "explaincode.openLearningMode",
+          "when": "resourceExtname == .epd || resourceExtname == .eai || resourceExtname == .explain",
+          "group": "navigation@3"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "explaincode.showPython",
+          "when": "editorLangId == explaincode"
+        },
+        {
+          "command": "explaincode.explainConcepts",
+          "when": "editorLangId == explaincode"
+        },
+        {
+          "command": "explaincode.openLearningMode",
+          "when": "editorLangId == explaincode"
+        }
+      ]
+    }
+  }
+}

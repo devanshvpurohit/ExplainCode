@@ -29,12 +29,12 @@ class ExplainAIParser:
 
         for line in lines[1:]:
             if line.startswith("INPUT:"):
-                self.ast["inputs"] = [x.strip() for x in line.replace("INPUT:", "").split(",")]
+                self.ast["inputs"] = [x.strip() for x in line.replace("INPUT:", "").split(",") if x.strip()]
             elif line.startswith("OUTPUT:"):
                 continue  # Optional
             elif line.startswith(("END ALGORITHM", "END MODEL", "END API_CALL")):
                 break
-            elif line.startswith("STEP"):
+            else:
                 step = self._parse_step(line)
                 if step:
                     self.ast["body"].append(step)
@@ -43,13 +43,11 @@ class ExplainAIParser:
 
     def _parse_step(self, line):
         match = re.match(r"STEP\s+\d+:?\s*(.+)", line)
-        if not match:
-            return None
-        content = match.group(1)
+        content = match.group(1) if match else line.strip()
 
         # === ASSIGNMENT ===
-        if content.startswith("Set"):
-            m = re.match(r"Set\s+(.+?)\s+←\s+(.+)", content)
+        if content.startswith(("Set", "SET")):
+            m = re.match(r"(?:Set|SET)\s+(.+?)\s+←\s+(.+)", content)
             if m:
                 return {"type": "assign", "target": m.group(1), "value": m.group(2)}
 
@@ -97,8 +95,9 @@ class ExplainAIParser:
         elif content.startswith("RETURN"):
             return {"type": "return", "value": content.replace("RETURN", "").strip()}
 
-        elif content.startswith("PRINT"):
-            return {"type": "print", "value": content.replace("PRINT", "").strip()}
+        elif content.startswith(("PRINT", "DISPLAY")):
+            val = re.sub(r"^(?:PRINT|DISPLAY)\s*", "", content).strip()
+            return {"type": "print", "value": val}
 
         elif content.startswith("BREAK"):
             return {"type": "break"}
@@ -391,7 +390,13 @@ def run_explainai(filename, save_python=False, verbose=False):
     print(f"\n📥 Enter values for: {', '.join(ast_tree['inputs'])}")
     user_inputs = []
     for var in ast_tree['inputs']:
-        val = input(f"→ {var} = ")
+        # Inspect AST to provide helpful prompt hint if variable is indexed as a list
+        is_list_var = any(
+            isinstance(stmt, dict) and any(f"{var}[" in str(v) for v in stmt.values())
+            for stmt in ast_tree.get("body", [])
+        )
+        hint = " (list, e.g. [4, 9, 2, 15])" if is_list_var else ""
+        val = input(f"→ {var}{hint} = ")
         try:
             user_inputs.append(ast.literal_eval(val))
         except:
@@ -418,8 +423,17 @@ def main():
     try:
         run_explainai(args.filename, save_python=args.save, verbose=args.verbose)
     except Exception as e:
-        print(f"❌ Error: {str(e)}")
+        try:
+            from .errors import ErrorTutor
+            diag = ErrorTutor.diagnose_runtime(e)
+            print(f"\n{diag.to_formatted_string()}")
+        except Exception:
+            print(f"❌ Error: {str(e)}")
         sys.exit(1)
+
+# Aliases for learning environment & backward compatibility
+ExplainCodeCompiler = ExplainAICompiler
+ExplainCodeParser = ExplainAIParser
 
 if __name__ == "__main__":
     main()
