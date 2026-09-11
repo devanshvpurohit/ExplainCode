@@ -1,8 +1,8 @@
 {
   "name": "explaincode",
-  "displayName": "ExplainCode 2.0 - Learning Programming Environment",
+  "displayName": "ExplainCode 3.0 - Learning Programming Environment",
   "description": "Learning-oriented programming environment for ExplainCode: concept explanations, visual execution, Python equivalence, and challenges.",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "publisher": "devanshvpurohit",
   "engines": {
     "vscode": "^1.75.0"

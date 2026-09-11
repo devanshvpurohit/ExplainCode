@@ -1,6 +1,6 @@
-# ExplainCode 2.0 🧠💡
+# ExplainCode 3.0 🧠💡
 
-**ExplainCode 2.0** is a natural language programming language designed to bridge the gap between human logic and executable code. It allows you to build AI pipelines, manipulate data structures, and implement complex algorithms using a simple, readable syntax that "speaks your language."
+**ExplainCode 3.0** is a natural language programming language designed to bridge the gap between human logic and executable code. It allows you to build AI pipelines, manipulate data structures, and implement complex algorithms using a simple, readable syntax that "speaks your language."
 
 ---
 
