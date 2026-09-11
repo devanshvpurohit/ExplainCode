@@ -16,9 +16,8 @@ from .concepts import ConceptExplainer, explain_code
 from .errors import ErrorTutor
 from .challenges import CHALLENGES, get_challenge_by_id
 from .progression import ProgressionTracker
-from .transition import TransitionManager
 from .analytics import ResearchAnalytics
-from .learning_gui import ProgramStateWidget, ConceptWidget, ChallengeWidget, TransitionWidget
+from .learning_gui import ProgramStateWidget, ConceptWidget, ChallengeWidget
 
 
 class ExplainCodeParser:
@@ -431,21 +430,16 @@ class ExplainCodeApp(QWidget):
         self.step_btn = QPushButton("⏭ Step")
         self.reset_btn = QPushButton("🔄 Reset")
         self.python_toggle_btn = QPushButton("🐍 Show Python")
-        self.transition_btn = QPushButton("🎓 Transition")
-        self.export_btn = QPushButton("📊 Export Data")
 
         self.load_btn.clicked.connect(self.load_file)
         self.run_btn.clicked.connect(self.run_code)
         self.step_btn.clicked.connect(self.step_code)
         self.reset_btn.clicked.connect(self.reset_stepper)
         self.python_toggle_btn.clicked.connect(self.toggle_python_view)
-        self.transition_btn.clicked.connect(self.show_transition_tab)
-        self.export_btn.clicked.connect(self.export_research_data)
 
         for btn in [
             self.load_btn, self.run_btn, self.step_btn,
-            self.reset_btn, self.python_toggle_btn,
-            self.transition_btn, self.export_btn
+            self.reset_btn, self.python_toggle_btn
         ]:
             top_bar.addWidget(btn)
 
@@ -497,11 +491,6 @@ class ExplainCodeApp(QWidget):
         self.state_widget = ProgramStateWidget()
         self.tabs.addTab(self.state_widget, "📊 Program State")
 
-        # Tab 3: Python Transition
-        self.transition_widget = TransitionWidget()
-        self.transition_widget.on_load_code_fn = self.set_editor_code
-        self.tabs.addTab(self.transition_widget, "🎓 Python Transition")
-
         right_layout.addWidget(self.tabs)
         main_splitter.addWidget(right_widget)
 
@@ -545,18 +534,6 @@ class ExplainCodeApp(QWidget):
             self.python_toggle_btn.setText("🐍 Hide Python")
         else:
             self.python_toggle_btn.setText("🐍 Show Python")
-
-    def show_transition_tab(self):
-        self.tabs.setCurrentIndex(2)
-
-    def export_research_data(self):
-        path, _ = QFileDialog.getSaveFileName(self, "Export Research Metrics", "learning_metrics.csv", "CSV Files (*.csv);;JSON Files (*.json)")
-        if path:
-            if path.endswith(".json"):
-                self.analytics.export_json(path)
-            else:
-                self.analytics.export_csv(path)
-            QMessageBox.information(self, "Export Complete", f"Learning metrics successfully exported to:\n{path}")
 
     def gui_input(self, prompt):
         val, ok = QInputDialog.getText(self, "Input Required", prompt)

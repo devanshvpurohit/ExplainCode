@@ -120,4 +120,3 @@ def test_gui_app_instantiation():
     assert hasattr(window, "output")
     assert hasattr(window, "python_view")
     assert hasattr(window, "state_widget")
-    assert hasattr(window, "transition_widget")
