@@ -32,19 +32,22 @@ class ErrorReport:
         self.line_number = line_number
         self.source_line = source_line
 
-    def to_formatted_string(self) -> str:
+    def to_formatted_string(self, include_concept: bool = False) -> str:
         loc = f" (Line {self.line_number})" if self.line_number else ""
         lines = [
             f"❌ Something went wrong{loc}\n",
             f"Problem:\n  {self.problem}\n",
-            f"Concept:\n  {self.concept}\n",
+        ]
+        if self.source_line:
+            lines.append(f"Line content:\n  >>> {self.source_line}\n")
+        if include_concept and self.concept:
+            lines.append(f"Concept:\n  {self.concept}\n")
+        lines.extend([
             f"Expected Pattern:\n{self.expected}\n",
             f"Suggestion:\n  {self.suggestion}\n",
             "--------------------------------------------------",
             f"Technical Error:\n  {self.technical_error}"
-        ]
-        if self.source_line:
-            lines.insert(2, f"Line content:\n  >>> {self.source_line}\n")
+        ])
         return "\n".join(lines)
 
 
@@ -98,8 +101,11 @@ class ErrorTutor:
             if not stripped or stripped.startswith("#"):
                 continue
 
+            # Strip STEP N: prefix if present for statement classification
+            content = re.sub(r"^STEP\s+\d+:?\s*", "", stripped).strip()
+
             # Check assignment arrow
-            if re.search(r"\b(Set|SET)\b", stripped) and "←" not in stripped:
+            if re.search(r"^(?:Set|SET)\b", content) and "←" not in content:
                 return ErrorReport(
                     problem="The assignment is missing the arrow operator '←'.",
                     concept="ExplainCode uses the left arrow '←' to assign values to variables.",
@@ -110,34 +116,8 @@ class ErrorTutor:
                     source_line=line
                 )
 
-            # Check IF without THEN
-            if re.search(r"\bIF\b", stripped) and "THEN" not in stripped and not stripped.startswith("END"):
-                return ErrorReport(
-                    problem="The IF statement is missing THEN.",
-                    concept="Every IF statement condition must be followed by THEN before statements.",
-                    expected="IF condition THEN\n    ...\nEND IF",
-                    suggestion="Add 'THEN' after your condition on this line.",
-                    technical_error="SyntaxError: Missing THEN in IF statement",
-                    line_number=idx,
-                    source_line=line
-                )
-
-            # Check FOR without DO
-            if re.search(r"\b(FOR|FOREACH)\b", stripped) and "DO" not in stripped and not stripped.startswith("END"):
-                return ErrorReport(
-                    problem="The loop statement is missing 'DO'.",
-                    concept="Loops in ExplainCode end their header line with 'DO'.",
-                    expected="FOR i ← 1 to 10 DO\n    ...\nEND FOR",
-                    suggestion="Add 'DO' at the end of the loop header.",
-                    technical_error="SyntaxError: Missing DO in loop header",
-                    line_number=idx,
-                    source_line=line
-                )
-
-            # Track block stack
-            if re.search(r"\bIF\b", stripped) and not stripped.startswith("END"):
-                if_stack.append(idx)
-            elif stripped.startswith("END IF"):
+            # Block: END IF
+            if content.startswith("END IF"):
                 if if_stack:
                     if_stack.pop()
                 else:
@@ -150,10 +130,22 @@ class ErrorTutor:
                         line_number=idx,
                         source_line=line
                     )
+            # Block: IF ... THEN
+            elif content.startswith("IF ") or content == "IF":
+                if "THEN" not in content:
+                    return ErrorReport(
+                        problem="The IF statement is missing THEN.",
+                        concept="Every IF statement condition must be followed by THEN before statements.",
+                        expected="IF condition THEN\n    ...\nEND IF",
+                        suggestion="Add 'THEN' after your condition on this line.",
+                        technical_error="SyntaxError: Missing THEN in IF statement",
+                        line_number=idx,
+                        source_line=line
+                    )
+                if_stack.append(idx)
 
-            if re.search(r"\b(FOR|FOREACH)\b", stripped) and not stripped.startswith("END"):
-                for_stack.append(idx)
-            elif stripped.startswith(("END FOR", "END FOREACH")):
+            # Block: END FOR / END FOREACH
+            elif content.startswith(("END FOR", "END FOREACH")):
                 if for_stack:
                     for_stack.pop()
                 else:
@@ -166,10 +158,22 @@ class ErrorTutor:
                         line_number=idx,
                         source_line=line
                     )
+            # Block: FOR / FOREACH ... DO
+            elif content.startswith(("FOR ", "FOREACH ")):
+                if "DO" not in content:
+                    return ErrorReport(
+                        problem="The loop statement is missing 'DO'.",
+                        concept="Loops in ExplainCode end their header line with 'DO'.",
+                        expected="FOR i ← 1 to 10 DO\n    ...\nEND FOR",
+                        suggestion="Add 'DO' at the end of the loop header.",
+                        technical_error="SyntaxError: Missing DO in loop header",
+                        line_number=idx,
+                        source_line=line
+                    )
+                for_stack.append(idx)
 
-            if re.search(r"\bWHILE\b", stripped) and not stripped.startswith("END"):
-                while_stack.append(idx)
-            elif stripped.startswith("END WHILE"):
+            # Block: END WHILE
+            elif content.startswith("END WHILE"):
                 if while_stack:
                     while_stack.pop()
                 else:
@@ -182,10 +186,22 @@ class ErrorTutor:
                         line_number=idx,
                         source_line=line
                     )
+            # Block: WHILE ... DO
+            elif content.startswith("WHILE ") or content == "WHILE":
+                if "DO" not in content:
+                    return ErrorReport(
+                        problem="The loop statement is missing 'DO'.",
+                        concept="WHILE loops end their header line with 'DO'.",
+                        expected="WHILE condition DO\n    ...\nEND WHILE",
+                        suggestion="Add 'DO' at the end of the WHILE header.",
+                        technical_error="SyntaxError: Missing DO in WHILE header",
+                        line_number=idx,
+                        source_line=line
+                    )
+                while_stack.append(idx)
 
-            if stripped.startswith("TRY"):
-                try_stack.append(idx)
-            elif stripped.startswith("END TRY"):
+            # Block: END TRY
+            elif content.startswith("END TRY"):
                 if try_stack:
                     try_stack.pop()
                 else:
@@ -198,6 +214,10 @@ class ErrorTutor:
                         line_number=idx,
                         source_line=line
                     )
+            # Block: TRY
+            elif content.startswith("TRY"):
+                try_stack.append(idx)
+
 
         # Unclosed blocks
         if if_stack:

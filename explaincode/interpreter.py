@@ -428,27 +428,23 @@ class ExplainCodeApp(QWidget):
         self.load_btn = QPushButton("📂 Open File")
         self.run_btn = QPushButton("▶ Run")
         self.run_btn.setStyleSheet("font-weight: bold; background-color: #e6f4ea;")
-        self.explain_btn = QPushButton("💡 Explain")
         self.step_btn = QPushButton("⏭ Step")
         self.reset_btn = QPushButton("🔄 Reset")
         self.python_toggle_btn = QPushButton("🐍 Show Python")
-        self.challenge_btn = QPushButton("🎯 Challenge")
         self.transition_btn = QPushButton("🎓 Transition")
         self.export_btn = QPushButton("📊 Export Data")
 
         self.load_btn.clicked.connect(self.load_file)
         self.run_btn.clicked.connect(self.run_code)
-        self.explain_btn.clicked.connect(self.explain_concepts)
         self.step_btn.clicked.connect(self.step_code)
         self.reset_btn.clicked.connect(self.reset_stepper)
         self.python_toggle_btn.clicked.connect(self.toggle_python_view)
-        self.challenge_btn.clicked.connect(self.show_challenge_tab)
         self.transition_btn.clicked.connect(self.show_transition_tab)
         self.export_btn.clicked.connect(self.export_research_data)
 
         for btn in [
-            self.load_btn, self.run_btn, self.explain_btn, self.step_btn,
-            self.reset_btn, self.python_toggle_btn, self.challenge_btn,
+            self.load_btn, self.run_btn, self.step_btn,
+            self.reset_btn, self.python_toggle_btn,
             self.transition_btn, self.export_btn
         ]:
             top_bar.addWidget(btn)
@@ -501,17 +497,7 @@ class ExplainCodeApp(QWidget):
         self.state_widget = ProgramStateWidget()
         self.tabs.addTab(self.state_widget, "📊 Program State")
 
-        # Tab 3: Concept Explanation
-        self.concept_widget = ConceptWidget()
-        self.tabs.addTab(self.concept_widget, "🧠 Concepts")
-
-        # Tab 4: Challenges
-        self.challenge_widget = ChallengeWidget(self.progression, self.analytics)
-        self.challenge_widget.on_load_code_fn = self.set_editor_code
-        self.challenge_widget.test_btn.clicked.connect(self.run_challenge_tests)
-        self.tabs.addTab(self.challenge_widget, "🎯 Practice Challenges")
-
-        # Tab 5: Python Transition
+        # Tab 3: Python Transition
         self.transition_widget = TransitionWidget()
         self.transition_widget.on_load_code_fn = self.set_editor_code
         self.tabs.addTab(self.transition_widget, "🎓 Python Transition")
@@ -560,15 +546,8 @@ class ExplainCodeApp(QWidget):
         else:
             self.python_toggle_btn.setText("🐍 Show Python")
 
-    def show_challenge_tab(self):
-        self.tabs.setCurrentIndex(3)
-
     def show_transition_tab(self):
-        self.tabs.setCurrentIndex(4)
-
-    def run_challenge_tests(self):
-        code = self.editor.toPlainText()
-        self.challenge_widget.run_tests(code)
+        self.tabs.setCurrentIndex(2)
 
     def export_research_data(self):
         path, _ = QFileDialog.getSaveFileName(self, "Export Research Metrics", "learning_metrics.csv", "CSV Files (*.csv);;JSON Files (*.json)")

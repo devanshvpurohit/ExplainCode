@@ -24,10 +24,13 @@ def test_syntax_missing_end_if():
 
     formatted = report.to_formatted_string()
     assert "Problem:" in formatted
-    assert "Concept:" in formatted
     assert "Expected Pattern:" in formatted
     assert "Suggestion:" in formatted
     assert "Technical Error:" in formatted
+
+    # Concept section only appears when include_concept=True
+    formatted_with_concept = report.to_formatted_string(include_concept=True)
+    assert "Concept:" in formatted_with_concept
 
 
 def test_syntax_missing_then():
