@@ -1,0 +1,13 @@
+ALGORITHM SumOfList
+INPUT: numbers, n
+OUTPUT: total
+
+STEP 1: SET total == 0
+STEP 2: FOR i == 0 to n-1 DO
+STEP 3:     SET total == total + numbers[i]
+STEP 4: END FOR
+STEP 5: DISPLAY "Sum is:"
+STEP 6: DISPLAY total
+STEP 7: RETURN total
+
+END ALGORITHM

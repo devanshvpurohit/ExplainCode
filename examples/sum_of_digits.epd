@@ -1,0 +1,15 @@
+ALGORITHM SumOfDigits
+INPUT: n
+OUTPUT: digit_sum
+
+STEP 1: SET digit_sum == 0
+STEP 2: SET num == n
+STEP 3: WHILE num > 0 DO
+STEP 4:     SET digit_sum == digit_sum + num % 10
+STEP 5:     SET num == num // 10
+STEP 6: END WHILE
+STEP 7: DISPLAY "Sum of digits:"
+STEP 8: DISPLAY digit_sum
+STEP 9: RETURN digit_sum
+
+END ALGORITHM
