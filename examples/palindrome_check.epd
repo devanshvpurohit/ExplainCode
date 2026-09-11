@@ -1,0 +1,19 @@
+ALGORITHM PalindromeCheck
+INPUT: text
+OUTPUT: is_palindrome
+
+STEP 1: SET i ← 0
+STEP 2: SET j ← len(text) - 1
+STEP 3: SET is_palindrome ← True
+STEP 4: WHILE i < j DO
+STEP 5:     IF text[i] != text[j] THEN
+STEP 6:         SET is_palindrome ← False
+STEP 7:         BREAK
+STEP 8:     END IF
+STEP 9:     SET i ← i + 1
+STEP 10:    SET j ← j - 1
+STEP 11: END WHILE
+STEP 12: DISPLAY is_palindrome
+STEP 13: RETURN is_palindrome
+
+END ALGORITHM

@@ -1,0 +1,15 @@
+ALGORITHM Factorial
+INPUT: n
+OUTPUT: result
+
+STEP 1: SET result ← 1
+STEP 2: SET i ← n
+STEP 3: WHILE i > 1 DO
+STEP 4:     SET result ← result * i
+STEP 5:     SET i ← i - 1
+STEP 6: END WHILE
+STEP 7: DISPLAY "Factorial is:"
+STEP 8: DISPLAY result
+STEP 9: RETURN result
+
+END ALGORITHM

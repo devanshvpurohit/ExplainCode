@@ -1,0 +1,24 @@
+ALGORITHM FizzBuzz
+INPUT: n
+OUTPUT: result_list
+
+STEP 1: SET result_list ← []
+STEP 2: FOR i ← 1 to n DO
+STEP 3:     IF i % 15 == 0 THEN
+STEP 4:         result_list.append("FizzBuzz")
+STEP 5:         CONTINUE
+STEP 6:     END IF
+STEP 7:     IF i % 3 == 0 THEN
+STEP 8:         result_list.append("Fizz")
+STEP 9:         CONTINUE
+STEP 10:    END IF
+STEP 11:    IF i % 5 == 0 THEN
+STEP 12:        result_list.append("Buzz")
+STEP 13:        CONTINUE
+STEP 14:    END IF
+STEP 15:    result_list.append(i)
+STEP 16: END FOR
+STEP 17: DISPLAY result_list
+STEP 18: RETURN result_list
+
+END ALGORITHM
