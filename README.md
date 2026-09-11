@@ -2,8 +2,6 @@
 
 ExplainCode is a natural language programming language that enables you to create AI pipelines, work with datasets, and execute algorithms using a syntax that's easy to read, write, and understand.
 ---
-You can try the latest ExplainCode release in a browser-based coding environment at: [https://huggingface.co/spaces/devanshvpurohit/ExplainCode](https://huggingface.co/spaces/devanshvpurohit/ExplainCode)
----
 
 ## Highlights (v2.0.0)
 
