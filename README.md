@@ -95,7 +95,7 @@ When you open an .epd file in ExplainCode it transforms into a complete pedagogi
 6. Pedagogical Error Guidance - Get beginner-friendly error explanations (Problem, Concept, Expected, Suggestion) alongside technical errors.
 7. Research Analytics - Optional anonymous learning metrics and CSV/JSON export capabilities for educational reasearch.
 ---
-## 🖥️ VS Code Extension
+##  VS Code Extension
 ExplainCode has an official VS Code extension in the `vscode-extension` folder:
 - Highlights syntax for `.epd`, `.eai` and `.explain` files
 - Adds the following commands:
