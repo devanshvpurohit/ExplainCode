@@ -1,0 +1,10 @@
+ALGORITHM SumTwoNumbers
+INPUT: a, b
+OUTPUT: result
+
+STEP 1: SET result == a + b
+STEP 2: DISPLAY "Sum is:"
+STEP 3: DISPLAY result
+STEP 4: RETURN result
+
+END ALGORITHM
