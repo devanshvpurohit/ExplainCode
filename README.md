@@ -1,156 +1,121 @@
-# ExplainCode 3.0 🧠💡
+# ExplainCode 3.0
 
-**ExplainCode 3.0** is a natural language programming language designed to bridge the gap between human logic and executable code. It allows you to build AI pipelines, manipulate data structures, and implement complex algorithms using a simple, readable syntax that "speaks your language."
-
+ExplainCode is a natural language programming language that enables you to create AI pipelines, work with datasets, and execute algorithms using a syntax that's easy to read, write, and understand.
+---
+You can try the latest ExplainCode release in a browser-based coding environment at: [https://huggingface.co/spaces/devanshvpurohit/ExplainCode](https://huggingface.co/spaces/devanshvpurohit/ExplainCode)
 ---
 
-## 🌟 Key Features (v2.0.0)
+## Highlights (v2.0.0)
 
-- 🤖 **AI Pipeline Support**: Native `LOAD_MODEL` and `PREDICT` steps using HuggingFace Transformers.
-- 🗃️ **Complex Data Structures**: First-class support for `LIST` and `DICT` with `APPEND`, `REMOVE`, and `GET`.
-- 📊 **Functional Utilities**: Built-in `SORT`, `FILTER`, `MAP`, and `REDUCE` operations.
-- ⚠️ **Robust Error Handling**: Python-style `TRY`/`CATCH` blocks for graceful failure management.
-- 🧠 **In-Memory Execution**: Direct execution of logic without residual intermediate files.
-- 🖥️ **Dual Interface**: Use the clean CLI for scripting or the interactive PyQt5 IDE for visual development.
-
+- AI pipeline support (LOAD_MODEL and PREDICT steps using HuggingFace Transformers)
+- First class LIST and DICT support with APPEND, REMOVE, GET
+- Powerful functional utilities like SORT, FILTER, MAP, REDUCE
+- Familiar Python-like TRY/CATCH error handling
+- In-memory execution with no intermediate files
+- Use ExplainCode in a clean CLI or full featured PyQt5 IDE
 ---
 
-## 📦 Installation
+##  Installation
 
-To make ExplainCode available globally on your machine:
-
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/devanshvpurohit/ExplainCode.git
-   cd ExplainCode
-   ```
-
-2. **Install the package**:
-   ```bash
-   pip install .
-   ```
-
----
-
-## 🚀 Usage
-
-### 🛠️ Command Line Interface
-Run your ExplainCode files (`.epd`, `.eai`) directly from the terminal:
-
+These are the steps to install ExplainCode system-wide:
 ```bash
-# Run a script immediately
+
+git clone https://github.com/devanshvpurohit/ExplainCode.git
+cd ExplainCode
+pip install .
+```
+---
+##  Usage
+All usage examples assume you've installed ExplainCode. You can run .epd and .eai files in two ways:
+### Command Line Interface
+```bash
+# Immediately run a file
 explaincode examples/data_structures.epd
-
-# Run with verbose output (see generated Python)
+# Run file and print verbose log showing generated Python
 explaincode examples/data_structures.epd --verbose
-
-# Run and save the underlying Python source
+# Run file and save Python source to disk
 explaincode examples/data_structures.epd --save
 ```
-
-### 🎨 Interactive IDE
-Launch the visual editor and runner:
+### Graphical User Interface
 ```bash
 explaincode-gui
 ```
-
 ---
-
-## 📜 Language Examples
-
+## Examples
 ### AI Sentiment Analysis
 ```plaintext
 MODEL AnalyzeSentiment
 INPUT: text
 STEP 1: PRINT "Analyzing..."
-STEP 2: LOAD_MODEL "sentiment-analysis" → model
-STEP 3: PREDICT text → result
+STEP 2: LOAD_MODEL "sentiment-analysis" -> model
+STEP 3: PREDICT text -> result
 STEP 4: PRINT result
 STEP 5: RETURN result
 END MODEL
 ```
-
-### Data Manipulation
+### Data Filtering
 ```plaintext
 ALGORITHM FilterHighNumbers
 INPUT: numbers
-STEP 1: SORT numbers → sorted_list
-STEP 2: FILTER sorted_list WHERE x > 50 → high_nums
+STEP 1: SORT numbers -> sorted_list
+STEP 2: FILTER sorted_list WHERE x > 50 -> high_nums
 STEP 3: PRINT "High numbers found:"
 STEP 4: PRINT high_nums
 STEP 5: RETURN high_nums
 END ALGORITHM
 ```
-
 ---
-
-## 📁 Project Structure
-
-```
+##  Project Structure
+```bash
 ExplainCode/
-├── explaincode/                # Core Package Source
-│   ├── compiler.py             # Compiler, AST & CLI logic
-│   ├── interpreter.py          # Learning Mode IDE & Interpreter
-│   ├── concepts.py             # AST concept explainer
-│   ├── stepper.py              # Step-by-step visual execution tracer
-│   ├── errors.py               # Pedagogical error guidance tutor
-│   ├── challenges.py           # Practice challenges & hints
-│   ├── progression.py          # Concept mastery progression tracking
-│   ├── transition.py           # 5-level Python transition scaffolding
-│   ├── analytics.py            # Anonymous educational research metrics
-│   ├── learning_gui.py         # PyQt5 learning widgets
-│   └── lang/                   # Language definitions & LSP
-├── vscode-extension/           # Official VS Code extension
-├── tests/                      # Comprehensive test suite
-├── examples/                   # Built-in demo scripts
-├── pyproject.toml              # Package configuration
-└── README.md                   # Documentation
+├── explaincode/        # Core Package Source
+│  ├── compiler.py       # Compiler, AST & CLI logic
+│  ├── interpreter.py     # Learning Mode IDE & Interpreter
+│  ├── concepts.py       # AST concept explainer
+│  ├── stepper.py       # Step-by-step visual execution tracer
+│  ├── errors.py        # Pedagogical error guidance tutor
+│  ├── challenges.py      # Practice challenges & hints
+│  ├── progression.py     # Concept mastery progression tracking
+│  ├── transition.py      # 5-level Python transition scaffolding
+│  ├── analytics.py      # Anonymous educational research metrics
+│  ├── learning_gui.py     # PyQt5 learning widgets
+│  └── lang/          # Language definitions & LSP
+├── vscode-extension/      # Official VS Code extension
+├── tests/           # Test suite
+├── examples/          # Example scripts
+├── pyproject.toml       # Python packaging config
+└── README.md          # Docs
 ```
-
+---
+## 📚 Learning Mode
+When you open an .epd file in ExplainCode it transforms into a complete pedagogical environment that bridges natural-language algorithmic thinking and conventional Python programming:
+1. Concept Explanation - Click Explain to analyze your code's AST and learn the programming concepts (Variables, Conditionals, Loops, Data Structures, Functions, Error Handling).
+2. Equivalent Python - Click Show Python to see the equivalent Python generated by `ExplainCodeCompiler`.
+3. Statement Stepper - Step through your algorithm line-by-line while inspecting variable values, condition branches and loop iterations.
+4. Practice Challenges - Learn by solving interactive challenges at different difficulty levels with 3-tiered hint system.
+5. 5-Level Python Transition - Move from natural language -> ExplainCode -> Dual View -> Fill-in-the-blank Python -> Independent Python.
+6. Pedagogical Error Guidance - Get beginner-friendly error explanations (Problem, Concept, Expected, Suggestion) alongside technical errors.
+7. Research Analytics - Optional anonymous learning metrics and CSV/JSON export capabilities for educational reasearch.
+---
+## 🖥️ VS Code Extension
+ExplainCode has an official VS Code extension in the `vscode-extension` folder:
+- Highlights syntax for `.epd`, `.eai` and `.explain` files
+- Adds the following commands:
+- `ExplainCode: Show Equivalent Python`
+- `ExplainCode: Explain Concepts`
+- `ExplainCode: Open Learning Mode GUI`
+- `ExplainCode: Run File in Terminal`
+- `ExplainCode: Open Learning Challenges`
+To install, copy the `vscode-extension` folder to `~/.vscode/extensions/devanshvpurohit.explaincode-2.0.0/` or install it from the VS Code Extensions Marketplace.
+---
+##  Contributing
+Contributions of all kinds are welcome! Please consider forking this repository and submitting a PR with your changes.
+If you find any issues, please report them here: [https://github.com/devanshvpurohit/ExplainCode/issues](https://github.com/devanshvpurohit/ExplainCode/issues)
 ---
 
-## 🎓 Learning Mode Features
+##  License
 
-ExplainCode transforms into a full pedagogical environment designed to bridge natural-language algorithmic thinking with conventional Python programming:
-
-1. **💡 Concept Explanation**: Click **Explain** to analyze your code's AST and learn the foundational programming concepts (Variables, Conditionals, Loops, Data Structures, Functions, Error Handling).
-2. **🐍 Equivalent Python**: Click **Show Python** to view side-by-side Python generated by `ExplainCodeCompiler`.
-3. **⏭ Step-by-Step Execution**: Step statement-by-statement through your algorithm, inspecting variables, condition branches, and loop iterations in real time.
-4. **🎯 Practice Challenges & Hints**: Interactive challenges across difficulty tiers with 3-tier progressive hint disclosure.
-5. **🎓 5-Level Python Transition**: Seamlessly transition from natural language -> ExplainCode -> Dual View -> Fill-in-the-blank Python -> Independent Python.
-6. **❌ Pedagogical Error Guidance**: Clear beginner explanations (Problem, Concept, Expected, Suggestion) alongside technical errors.
-7. **📊 Research Analytics**: Optional anonymous learning metric logging and CSV/JSON export for educational researchers.
-
+MIT Licensed.
 ---
 
-## 💻 VS Code Extension
-
-ExplainCode includes an official Visual Studio Code extension located in `vscode-extension/`:
-
-- **Syntax Highlighting**: Full grammar support for `.epd`, `.eai`, and `.explain` files.
-- **Commands**:
-  - `ExplainCode: Show Equivalent Python`
-  - `ExplainCode: Explain Concepts`
-  - `ExplainCode: Open Learning Mode GUI`
-  - `ExplainCode: Run File in Terminal`
-  - `ExplainCode: Open Learning Challenges`
-- **Installation**: Copy `vscode-extension` to `~/.vscode/extensions/devanshvpurohit.explaincode-2.0.0/` or install via the VS Code Extensions menu.
-
----
-
-## 🤝 Contributing & Support
-
-We welcome contributions! Fork the repo, add your features, and submit a PR.
-
-- **Found a bug?** Open an [Issue](https://github.com/devanshvpurohit/ExplainCode/issues).
-- **Have a feature idea?** Start a discussion.
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
----
-*Empowering ideas through code. One step at a time.* ✨
-
+Empowering ideas through code. One step at a time.
