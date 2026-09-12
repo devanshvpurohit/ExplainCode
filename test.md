@@ -84,3 +84,83 @@ The following table summarizes the primary evaluation criteria, our testing meth
 | **Execution Correctness** | Execute algorithms dynamically via the pedagogical interpreter (`ExplainCodeStepper`) to verify accurate runtime state tracking and control flow. | **Completed** | Step-by-step state tracking verifies that environment variables and conditional branches evaluate correctly across complex logic paths (e.g., the *Fibonacci sequence*). Validated via `test_stepper.py` and benchmark tests. |
 | **Compilation Correctness** | Transpile ExplainCode source into pure Python AST, execute via native `exec()`, and assert output equivalence against expected algorithmic results. | **Completed** | 100% semantic equivalence achieved. The transpiler (`test_compiler_python.py`) successfully maps ExplainCode arrays, loops, and functional constructs (`MAP`/`FILTER`) into valid, executable Python structures matching standard expectations. |
 | **Error Diagnostics** | Inject intentionally malformed syntax (e.g., unmatched `END IF` blocks, missing assignment operators) to evaluate the pedagogical interception of raw exceptions. | **Completed** | The `ErrorTutor` diagnostic layer successfully intercepted 100% of injected runtime and syntax errors. Raw tracebacks were effectively suppressed and replaced with structured, multi-tier pedagogical feedback detailing the conceptual flaw. |
+
+---
+
+## 9. Execution Results (Live Run — September 2026)
+
+All tests reported below were executed locally on **macOS (Python 3.13.7, pytest 9.0.2)** against the `main` branch of the ExplainCode 3.0 repository. The raw terminal output of the full test run is reproduced verbatim below.
+
+### 9.1 Full pytest Run
+
+```
+platform darwin -- Python 3.13.7, pytest-9.0.2, pluggy-1.6.0
+rootdir: /ExplainCode
+configfile: pyproject.toml
+collected 35 items
+
+tests/test_backward_compatibility.py::test_existing_find_max_example       PASSED [  2%]
+tests/test_backward_compatibility.py::test_existing_data_structures_example PASSED [  5%]
+tests/test_backward_compatibility.py::test_existing_loops_demo_example      PASSED [  8%]
+tests/test_backward_compatibility.py::test_existing_error_handling_example  PASSED [ 11%]
+tests/test_backward_compatibility.py::test_gui_app_instantiation            PASSED [ 14%]
+tests/test_compiler_python.py::test_compiler_aliases                        PASSED [ 17%]
+tests/test_compiler_python.py::test_compiler_basic_assignment_and_print     PASSED [ 20%]
+tests/test_compiler_python.py::test_compiler_conditionals                   PASSED [ 22%]
+tests/test_compiler_python.py::test_compiler_loops_and_control              PASSED [ 25%]
+tests/test_compiler_python.py::test_compiler_data_structures                PASSED [ 28%]
+tests/test_compiler_python.py::test_compiler_functional_utilities           PASSED [ 31%]
+tests/test_errors.py::test_syntax_missing_end_if                            PASSED [ 34%]
+tests/test_errors.py::test_syntax_missing_then                              PASSED [ 37%]
+tests/test_errors.py::test_syntax_missing_assignment_arrow                  PASSED [ 40%]
+tests/test_errors.py::test_syntax_missing_loop_terminator                   PASSED [ 42%]
+tests/test_errors.py::test_runtime_name_error                               PASSED [ 45%]
+tests/test_errors.py::test_runtime_zero_division                            PASSED [ 48%]
+tests/test_errors.py::test_runtime_index_error                              PASSED [ 51%]
+tests/test_errors.py::test_runtime_key_error                                PASSED [ 54%]
+tests/test_errors.py::test_syntax_empty_file                                PASSED [ 57%]
+tests/test_errors.py::test_syntax_missing_header                            PASSED [ 60%]
+tests/test_errors.py::test_syntax_unmatched_end_if                          PASSED [ 62%]
+tests/test_errors.py::test_syntax_unmatched_end_for                         PASSED [ 65%]
+tests/test_execution_correctness.py::test_fibonacci_execution               PASSED [ 68%]
+tests/test_execution_correctness.py::test_fizzbuzz_compilation_correctness  PASSED [ 71%]
+tests/test_parser_coverage.py::test_parser_empty_file                       PASSED [ 74%]
+tests/test_parser_coverage.py::test_parser_invalid_header                   PASSED [ 77%]
+tests/test_parser_coverage.py::test_parser_imports_and_keys                 PASSED [ 80%]
+tests/test_parser_coverage.py::test_parser_else_if                          PASSED [ 82%]
+tests/test_stepper.py::test_step_execution_and_variable_tracking            PASSED [ 85%]
+tests/test_stepper.py::test_if_execution_branching                          PASSED [ 88%]
+tests/test_stepper.py::test_for_execution_iteration                         PASSED [ 91%]
+tests/test_stepper.py::test_foreach_and_break_execution                     PASSED [ 94%]
+tests/test_stepper.py::test_while_execution                                 PASSED [ 97%]
+tests/test_stepper.py::test_reset_functionality                             PASSED [100%]
+
+============================== 35 passed in 0.44s ==============================
+```
+
+### 9.2 Per-Category Breakdown
+
+**Table 2: Test Execution Results by Category**
+
+| Category | Test File | Tests Run | Passed | Failed | Duration |
+| :--- | :--- | :---: | :---: | :---: | :---: |
+| Backward Compatibility | `test_backward_compatibility.py` | 5 | 5 | 0 | < 0.1s |
+| Compilation Correctness | `test_compiler_python.py` | 6 | 6 | 0 | < 0.1s |
+| Error Diagnostics | `test_errors.py` | 12 | 12 | 0 | < 0.1s |
+| Execution Correctness | `test_execution_correctness.py` | 2 | 2 | 0 | < 0.1s |
+| Parser Coverage | `test_parser_coverage.py` | 4 | 4 | 0 | < 0.1s |
+| Stepper / Step Execution | `test_stepper.py` | 6 | 6 | 0 | < 0.1s |
+| **Total** | — | **35** | **35** | **0** | **0.44s** |
+
+### 9.3 Benchmark Execution Results
+
+All four standard benchmark programs were executed via the ExplainCode transpiler and produced the expected outputs verified against established algorithm references.
+
+**Table 3: Benchmark Program Execution Results**
+
+| Benchmark | Source | Input | Expected Output | Actual Output | Pass |
+| :--- | :--- | :--- | :--- | :--- | :---: |
+| Rainfall Problem | Soloway (1986) / CSEd | `[-2, 10, 5, 20, 99999, 100]` | `11.666...` | `11.666666666666666` | PASS |
+| Binary Search | Rosetta Code | `arr=[1,3,5,7,9], target=5` | `2` | `2` | PASS |
+| Centered Average | CodingBat (AP CS) | `[1, 2, 3, 4, 100]` | `3` | `3` | PASS |
+| Rolling Max | HumanEval Task 009 | `[1, 2, 3, 2, 3, 4, 2]` | `[1,2,3,3,3,4,4]` | `[1, 2, 3, 3, 3, 4, 4]` | PASS |
