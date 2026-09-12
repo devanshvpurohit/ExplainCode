@@ -1,0 +1,17 @@
+ALGORITHM RollingMax
+INPUT: numbers
+OUTPUT: result
+
+STEP 1: SET result == []
+STEP 2: SET current_max == None
+STEP 3: FOREACH n IN numbers DO
+STEP 4:     IF current_max == None THEN
+STEP 5:         SET current_max == n
+STEP 6:     ELSE IF n > current_max THEN
+STEP 7:         SET current_max == n
+STEP 8:     END IF
+STEP 9:     result.append(current_max)
+STEP 10: END FOREACH
+STEP 11: RETURN result
+
+END ALGORITHM

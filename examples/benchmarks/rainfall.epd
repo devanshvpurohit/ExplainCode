@@ -1,0 +1,25 @@
+ALGORITHM Rainfall
+INPUT: measurements
+OUTPUT: average
+
+STEP 1: SET total == 0
+STEP 2: SET count == 0
+STEP 3: FOREACH rain IN measurements DO
+STEP 4:     IF rain == 99999 THEN
+STEP 5:         BREAK
+STEP 6:     END IF
+STEP 7:     IF rain >= 0 THEN
+STEP 8:         SET total == total + rain
+STEP 9:         SET count == count + 1
+STEP 10:    END IF
+STEP 11: END FOREACH
+STEP 12: IF count == 0 THEN
+STEP 13:    DISPLAY "No valid rainfall entered."
+STEP 14:    RETURN 0
+STEP 15: END IF
+STEP 16: SET average == total / count
+STEP 17: DISPLAY "Average Rainfall:"
+STEP 18: DISPLAY average
+STEP 19: RETURN average
+
+END ALGORITHM

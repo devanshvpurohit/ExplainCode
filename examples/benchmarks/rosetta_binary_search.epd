@@ -1,0 +1,19 @@
+ALGORITHM BinarySearch
+INPUT: arr, target
+OUTPUT: index
+
+STEP 1: SET low == 0
+STEP 2: SET high == len(arr) - 1
+STEP 3: WHILE low <= high DO
+STEP 4:     SET mid == (low + high) // 2
+STEP 5:     IF arr[mid] == target THEN
+STEP 6:         RETURN mid
+STEP 7:     ELSE IF arr[mid] < target THEN
+STEP 8:         SET low == mid + 1
+STEP 9:     ELSE
+STEP 10:        SET high == mid - 1
+STEP 11:    END IF
+STEP 12: END WHILE
+STEP 13: RETURN -1
+
+END ALGORITHM

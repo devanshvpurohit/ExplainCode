@@ -1,0 +1,21 @@
+ALGORITHM CenteredAverage
+INPUT: nums
+OUTPUT: avg
+
+STEP 1: SET min_val == nums[0]
+STEP 2: SET max_val == nums[0]
+STEP 3: SET total == 0
+STEP 4: FOREACH n IN nums DO
+STEP 5:     IF n < min_val THEN
+STEP 6:         SET min_val == n
+STEP 7:     END IF
+STEP 8:     IF n > max_val THEN
+STEP 9:         SET max_val == n
+STEP 10:    END IF
+STEP 11:    SET total == total + n
+STEP 12: END FOREACH
+STEP 13: SET final_sum == total - min_val - max_val
+STEP 14: SET avg == final_sum // (len(nums) - 2)
+STEP 15: RETURN avg
+
+END ALGORITHM

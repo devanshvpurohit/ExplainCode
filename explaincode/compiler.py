@@ -22,7 +22,7 @@ class ExplainAIParser:
     def parse(self, lines):
         lines = [line.strip() for line in lines if line.strip() and not line.strip().startswith("#")]
 
-        if not lines[0].startswith(("ALGORITHM", "MODEL", "API_CALL")):
+        if not lines or not lines[0].startswith(("ALGORITHM", "MODEL", "API_CALL")):
             raise SyntaxError("File must start with ALGORITHM, MODEL, or API_CALL.")
 
         self.ast["function_name"] = lines[0].split()[1]
@@ -76,6 +76,10 @@ class ExplainAIParser:
         elif content.startswith("IF"):
             condition = content.replace("IF", "").replace("THEN", "").strip()
             return {"type": "if", "condition": condition}
+
+        elif content.startswith("ELSE IF"):
+            condition = content.replace("ELSE IF", "").replace("THEN", "").strip()
+            return {"type": "elseif", "condition": condition}
 
         elif content.startswith("END IF"):
             return {"type": "endif"}
@@ -252,6 +256,12 @@ class ExplainAICompiler:
 
         elif stmt["type"] == "if":
             self.code.append(f"{indent}if {stmt['condition']}:")
+            self.level += 1
+
+        elif stmt["type"] == "elseif":
+            self.level -= 1
+            indent = self.indent * self.level
+            self.code.append(f"{indent}elif {stmt['condition']}:")
             self.level += 1
 
         elif stmt["type"] == "else":
