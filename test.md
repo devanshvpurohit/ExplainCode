@@ -25,3 +25,50 @@ As a learning-oriented environment, ExplainCode replaces intimidating standard e
 
 ## 6. Conclusion
 The comprehensive **35-test evaluation suite** validates ExplainCode 3.0 as a highly resilient platform. By rigorously quantifying parsing limits, validating execution state integrity, proving strict Python compilation equivalence, and confirming the stability of 12 distinct pedagogical error intercepts, the language framework demonstrates production-ready reliability for computer science education.
+
+## 7. Appendix: Benchmark Execution Logs
+To empirically prove the transpiler's correctness against standard algorithmic challenges, the following logs demonstrate raw terminal execution of ExplainCode files mapped against Python 3 output.
+
+### 7.1 The Rainfall Problem
+**Input:** `[-2, 10, 5, 20, 99999, 100]`
+```text
+📥 Enter values for: measurements
+→ measurements = [-2, 10, 5, 20, 99999, 100]
+🚀 Running...
+
+Average Rainfall:
+11.666666666666666
+
+✅ Output: 11.666666666666666
+```
+
+### 7.2 Rosetta Code: Binary Search
+**Input:** `[1, 3, 5, 7, 9]`, target `5`
+```text
+📥 Enter values for: arr, target
+→ arr = [1, 3, 5, 7, 9]
+→ target = 5
+🚀 Running...
+
+✅ Output: 2
+```
+
+### 7.3 CodingBat: Centered Average
+**Input:** `[1, 2, 3, 4, 100]`
+```text
+📥 Enter values for: nums
+→ nums = [1, 2, 3, 4, 100]
+🚀 Running...
+
+✅ Output: 3
+```
+
+### 7.4 HumanEval 009: Rolling Max
+**Input:** `[1, 2, 3, 2, 3, 4, 2]`
+```text
+📥 Enter values for: numbers
+→ numbers = [1, 2, 3, 2, 3, 4, 2]
+🚀 Running...
+
+✅ Output: [1, 2, 3, 3, 3, 4, 4]
+```
