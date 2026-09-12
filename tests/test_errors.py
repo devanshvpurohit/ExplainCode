@@ -102,3 +102,35 @@ def test_runtime_key_error():
     report = ErrorTutor.diagnose_runtime(exc)
     assert "missing_key" in report.problem
     assert "KeyError" in report.technical_error
+
+def test_syntax_empty_file():
+    report = ErrorTutor.diagnose_syntax([])
+    assert report is not None
+    assert "The code file is empty." in report.problem
+
+def test_syntax_missing_header():
+    report = ErrorTutor.diagnose_syntax(["STEP 1: Set x == 10"])
+    assert report is not None
+    assert "missing a starting header" in report.problem
+
+def test_syntax_unmatched_end_if():
+    code = [
+        "ALGORITHM ExtraEndIf",
+        "INPUT: x",
+        "STEP 1: END IF",
+        "END ALGORITHM"
+    ]
+    report = ErrorTutor.diagnose_syntax(code)
+    assert report is not None
+    assert "Found an extra 'END IF' without a matching 'IF'" in report.problem
+
+def test_syntax_unmatched_end_for():
+    code = [
+        "ALGORITHM ExtraEndFor",
+        "INPUT: x",
+        "STEP 1: END FOR",
+        "END ALGORITHM"
+    ]
+    report = ErrorTutor.diagnose_syntax(code)
+    assert report is not None
+    assert "Found an extra 'END FOR' without a matching 'FOR'" in report.problem
