@@ -31,20 +31,10 @@ These implementations are located in the `examples/benchmarks/` directory and de
 Below are the direct terminal outputs from running these algorithms through the ExplainCode transpiler natively.
 
 ### Rainfall Execution
+**Input:** `[-2, 10, 5, 20, 99999, 100]`
 ```text
-```
-### Rosetta Code (Binary Search) Execution
-```text
-```
-### CodingBat (Centered Average) Execution
-```text
-```
-### HumanEval (Rolling Max) Execution
-```text
-```
-
 📥 Enter values for: measurements
-→ measurements = 
+→ measurements = [-2, 10, 5, 20, 99999, 100]
 🚀 Running...
 
 Average Rainfall:
@@ -52,33 +42,34 @@ Average Rainfall:
 
 ✅ Output: 11.666666666666666
 ```
+
 ### Rosetta Code (Binary Search) Execution
+**Input:** `[1, 3, 5, 7, 9]`, target `5`
 ```text
-
 📥 Enter values for: arr, target
-→ arr (list, e.g. [4, 9, 2, 15]) = → target = 
+→ arr = [1, 3, 5, 7, 9]
+→ target = 5
 🚀 Running...
-
 
 ✅ Output: 2
 ```
+
 ### CodingBat (Centered Average) Execution
+**Input:** `[1, 2, 3, 4, 100]`
 ```text
-
 📥 Enter values for: nums
-→ nums (list, e.g. [4, 9, 2, 15]) = 
+→ nums = [1, 2, 3, 4, 100]
 🚀 Running...
-
 
 ✅ Output: 3
 ```
+
 ### HumanEval (Rolling Max) Execution
+**Input:** `[1, 2, 3, 2, 3, 4, 2]`
 ```text
-
 📥 Enter values for: numbers
-→ numbers = 
+→ numbers = [1, 2, 3, 2, 3, 4, 2]
 🚀 Running...
-
 
 ✅ Output: [1, 2, 3, 3, 3, 4, 4]
 ```
